@@ -11,9 +11,7 @@ import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 export default function CreateInvitationPage() {
     const searchParams = useSearchParams();
 
-    const templateId =
-        searchParams.get("template") ?? "elegant-wedding";
-
+    const templateId = searchParams.get("template") ?? "elegant-wedding";
     const defaultTemplate = getTemplateById(templateId);
 
     const [selectedTemplate, setSelectedTemplate] =
@@ -25,72 +23,25 @@ export default function CreateInvitationPage() {
     const [eventType, setEventType] = useState(
         selectedTemplate.category,
     );
-
     const [title, setTitle] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [venue, setVenue] = useState("");
     const [message, setMessage] = useState("");
 
-    const [isSaving, setIsSaving] = useState(false);
-    const [saveMessage, setSaveMessage] = useState("");
-    const [savedSlug, setSavedSlug] = useState("");
-
-    async function handleSubmit(
-        event: FormEvent<HTMLFormElement>,
-    ) {
+    function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        setSaveMessage("");
-        setSavedSlug("");
-
-        if (!title.trim()) {
-            setSaveMessage("Please enter an event title.");
-            return;
-        }
-
-        setIsSaving(true);
-
-        try {
-            const response = await fetch("/api/invitations", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    title: title.trim(),
-                    templateId: selectedTemplate.id,
-                    category: eventType,
-                    eventDate: date,
-                    eventTime: time,
-                    venue: venue.trim(),
-                    theme: selectedTemplate.theme,
-                    typography: selectedTemplate.typography,
-                    message: message.trim(),
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setSaveMessage(
-                    data.error ?? "Failed to save invitation.",
-                );
-                return;
-            }
-
-            setSavedSlug(data.invitation.draftId);
-
-            setSaveMessage(
-                "Invitation draft validated successfully.",
-            );
-        } catch {
-            setSaveMessage(
-                "Something went wrong while saving the invitation.",
-            );
-        } finally {
-            setIsSaving(false);
-        }
+        console.log({
+            templateId: selectedTemplate.id,
+            template: selectedTemplate,
+            eventType,
+            title,
+            date,
+            time,
+            venue,
+            message,
+        });
     }
 
     return (
@@ -266,32 +217,12 @@ export default function CreateInvitationPage() {
                                     />
                                 </div>
 
-                                {saveMessage && (
-                                    <div
-                                        className={`rounded-xl border px-4 py-3 text-sm ${savedSlug
-                                                ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
-                                                : "border-red-500/30 bg-red-500/10 text-red-300"
-                                            }`}
-                                    >
-                                        <p>{saveMessage}</p>
-
-                                        {savedSlug && (
-                                            <p className="mt-1 text-xs text-emerald-400">
-                                                Draft ID: {savedSlug}
-                                            </p>
-                                        )}
-                                    </div>
-                                )}
-
                                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                                     <button
                                         type="submit"
-                                        disabled={isSaving}
-                                        className="rounded-full bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
+                                        className="rounded-full bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400"
                                     >
-                                        {isSaving
-                                            ? "Saving..."
-                                            : "Save Draft"}
+                                        Save Draft
                                     </button>
 
                                     <Link
@@ -306,9 +237,7 @@ export default function CreateInvitationPage() {
 
                         <ThemeCustomizer
                             template={selectedTemplate}
-                            originalTemplate={
-                                defaultTemplate ?? selectedTemplate
-                            }
+                            originalTemplate={defaultTemplate ?? selectedTemplate}
                             onChange={setSelectedTemplate}
                         />
                     </div>
@@ -326,18 +255,13 @@ export default function CreateInvitationPage() {
                             <div className="mt-6">
                                 <InvitationTemplate
                                     template={selectedTemplate}
-                                    title={
-                                        title || "You're Invited"
-                                    }
+                                    title={title || "You're Invited"}
                                     date={
                                         date
                                             ? `${date}${time ? ` • ${time}` : ""}`
                                             : "Saturday, 24 October 2026"
                                     }
-                                    venue={
-                                        venue ||
-                                        "Chennai, Tamil Nadu"
-                                    }
+                                    venue={venue || "Chennai, Tamil Nadu"}
                                 />
                             </div>
                         </div>
