@@ -1,4 +1,5 @@
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
+import InvitationScene from "@/components/invitation/3d/InvitationScene";
 import { getTemplateById } from "@/lib/templates";
 
 type PreviewPageProps = {
@@ -35,6 +36,10 @@ export default async function PreviewPage({
     );
   }
 
+  const invitationTitle = "You're Invited";
+  const invitationDate = "Saturday, 24 October 2026";
+  const invitationVenue = "Chennai, Tamil Nadu";
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-16">
       <div className="mx-auto max-w-6xl">
@@ -52,12 +57,45 @@ export default async function PreviewPage({
           </p>
         </div>
 
-        <InvitationTemplate
-          template={template}
-          title="You're Invited"
-          date="Saturday, 24 October 2026"
-          venue="Chennai, Tamil Nadu"
-        />
+        {/* 3D Preview */}
+        <section>
+          <div className="mb-5 text-center">
+            <h2 className="text-xl font-semibold text-white">
+              Interactive 3D Preview
+            </h2>
+
+            <p className="mt-2 text-sm text-slate-400">
+              Drag to rotate and explore your invitation.
+            </p>
+          </div>
+
+          <InvitationScene
+            template={template}
+            title={invitationTitle}
+            date={invitationDate}
+            venue={invitationVenue}
+          />
+        </section>
+
+        {/* Existing 2D Preview */}
+        <section className="mt-16">
+          <div className="mb-5 text-center">
+            <h2 className="text-xl font-semibold text-white">
+              Invitation Preview
+            </h2>
+
+            <p className="mt-2 text-sm text-slate-400">
+              Standard invitation preview.
+            </p>
+          </div>
+
+          <InvitationTemplate
+            template={template}
+            title={invitationTitle}
+            date={invitationDate}
+            venue={invitationVenue}
+          />
+        </section>
       </div>
     </main>
   );
