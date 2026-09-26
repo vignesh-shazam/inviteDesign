@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 import InvitationScene from "@/components/invitation/3d/InvitationScene";
+import WhatsAppShareButton from "@/components/invitation/WhatsAppShareButton";
 import { getInvitationByCardId } from "@/lib/db/invitationRepository";
 import { getTemplateById } from "@/lib/templates";
 
@@ -94,6 +95,16 @@ export default async function PublicInvitationPage({
           <InvitationScene
             template={template}
             title={invitation.title}
+            date={invitationDate}
+            venue={invitationVenue}
+          />
+        </section>
+
+        {/* WhatsApp Sharing */}
+        <section className="mt-8 flex justify-center">
+          <WhatsAppShareButton
+            title={invitation.title}
+            category={invitation.category}
             date={invitationDate}
             venue={invitationVenue}
           />
