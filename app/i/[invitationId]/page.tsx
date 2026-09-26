@@ -44,7 +44,7 @@ export default async function PublicInvitationPage({
   const invitationDate = invitation.eventDate
     ? `${invitation.eventDate}${
         invitation.eventTime
-          ? ` • ${invitation.eventTime}`
+          ? ` \u2022 ${invitation.eventTime}`
           : ""
       }`
     : "Date to be announced";

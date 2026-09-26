@@ -17,13 +17,13 @@ export default function WhatsAppShareButton({
     const invitationUrl = window.location.href;
 
     const message = [
-      `💌 You're invited to ${title}!`,
+      `\u{1F48C} You're invited to ${title}!`,
       "",
-      `🎉 ${category}`,
-      `📅 ${date}`,
-      `📍 ${venue}`,
+      `\u{1F389} ${category}`,
+      `\u{1F4C5} ${date}`,
+      `\u{1F4CD} ${venue}`,
       "",
-      "✨ View the invitation:",
+      "\u{2728} View the invitation:",
       invitationUrl,
     ].join("\n");
 
@@ -42,7 +42,7 @@ export default function WhatsAppShareButton({
     <button
       type="button"
       onClick={handleShare}
-      className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] hover:opacity-90"
+      className="inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] hover:opacity-90 sm:w-auto"
       style={{
         backgroundColor: "#25D366",
       }}
