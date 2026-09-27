@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import CalendarButtons from "@/components/invitation/CalendarButtons";
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 import InvitationScene from "@/components/invitation/3d/InvitationScene";
 import WhatsAppShareButton from "@/components/invitation/WhatsAppShareButton";
@@ -240,6 +241,18 @@ export default async function PublicInvitationPage({
             )}
           </div>
         </section>
+
+        {/* Calendar */}
+        <CalendarButtons
+          title={invitation.title}
+          date={invitation.eventDate}
+          time={invitation.eventTime}
+          venue={invitation.venue}
+          address={invitation.venueAddress}
+          description={invitation.message}
+          primaryColor={template.theme.primaryColor}
+          textColor={template.theme.textColor}
+        />
 
         {/* Invitation Message */}
         {invitation.message && (
