@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import CalendarButtons from "@/components/invitation/CalendarButtons";
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 import InvitationScene from "@/components/invitation/3d/InvitationScene";
+import RSVPForm from "@/components/invitation/RSVPForm";
 import WhatsAppShareButton from "@/components/invitation/WhatsAppShareButton";
 import { getInvitationByCardId } from "@/lib/db/invitationRepository";
 import { getTemplateById } from "@/lib/templates";
@@ -250,6 +251,13 @@ export default async function PublicInvitationPage({
           venue={invitation.venue}
           address={invitation.venueAddress}
           description={invitation.message}
+          primaryColor={template.theme.primaryColor}
+          textColor={template.theme.textColor}
+        />
+
+        {/* RSVP */}
+        <RSVPForm
+          invitationId={invitation.id}
           primaryColor={template.theme.primaryColor}
           textColor={template.theme.textColor}
         />
