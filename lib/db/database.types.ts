@@ -1,5 +1,21 @@
 export type InvitationStatus = "draft" | "published";
 
+export type RSVPAttendance =
+  | "attending"
+  | "maybe"
+  | "not_attending";
+
+export type RSVP = {
+  id: string;
+  invitationId: string;
+  guestName: string;
+  attendance: RSVPAttendance;
+  guestCount: number;
+  message: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type InvitationTheme = {
   primaryColor: string;
   secondaryColor: string;
