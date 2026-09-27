@@ -10,6 +10,10 @@ type CreateInvitationRequest = {
   eventDate?: string;
   eventTime?: string;
   venue?: string;
+  venueAddress?: string;
+  latitude?: number;
+  longitude?: number;
+  mapsUrl?: string;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
   message?: string;
@@ -60,6 +64,10 @@ export async function POST(request: Request) {
       eventDate: body.eventDate,
       eventTime: body.eventTime,
       venue: body.venue,
+      venueAddress: body.venueAddress,
+      latitude: body.latitude,
+      longitude: body.longitude,
+      mapsUrl: body.mapsUrl,
       message: body.message,
       theme: body.theme,
       typography: body.typography,
@@ -78,6 +86,10 @@ export async function POST(request: Request) {
           eventDate: invitation.eventDate,
           eventTime: invitation.eventTime,
           venue: invitation.venue,
+          venueAddress: invitation.venueAddress,
+          latitude: invitation.latitude,
+          longitude: invitation.longitude,
+          mapsUrl: invitation.mapsUrl,
           message: invitation.message,
           theme: invitation.theme,
           typography: invitation.typography,

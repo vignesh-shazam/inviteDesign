@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { getTemplateById } from "@/lib/templates";
@@ -8,7 +8,7 @@ import type { InvitationTemplate as InvitationTemplateType } from "@/types/templ
 import ThemeCustomizer from "@/components/invitation/ThemeCustomizer";
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 
-export default function CreateInvitationPage() {
+function CreateInvitationPageContent() {
     const searchParams = useSearchParams();
 
     const templateId =
@@ -30,6 +30,10 @@ export default function CreateInvitationPage() {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [venue, setVenue] = useState("");
+    const [venueAddress, setVenueAddress] = useState("");
+    const [mapsUrl, setMapsUrl] = useState("");
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
     const [message, setMessage] = useState("");
 
     const [isSaving, setIsSaving] = useState(false);
@@ -64,6 +68,16 @@ export default function CreateInvitationPage() {
                     eventDate: date,
                     eventTime: time,
                     venue: venue.trim(),
+                    venueAddress: venueAddress.trim(),
+                    mapsUrl: mapsUrl.trim(),
+                    latitude:
+                        latitude.trim() !== ""
+                            ? Number(latitude)
+                            : undefined,
+                    longitude:
+                        longitude.trim() !== ""
+                            ? Number(longitude)
+                            : undefined,
                     theme: selectedTemplate.theme,
                     typography: selectedTemplate.typography,
                     message: message.trim(),
@@ -140,6 +154,7 @@ export default function CreateInvitationPage() {
                             className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8"
                         >
                             <div className="space-y-6">
+                                {/* Event Type */}
                                 <div>
                                     <label
                                         htmlFor="eventType"
@@ -166,6 +181,7 @@ export default function CreateInvitationPage() {
                                     </select>
                                 </div>
 
+                                {/* Event Title */}
                                 <div>
                                     <label
                                         htmlFor="title"
@@ -186,6 +202,7 @@ export default function CreateInvitationPage() {
                                     />
                                 </div>
 
+                                {/* Date & Time */}
                                 <div className="grid gap-6 sm:grid-cols-2">
                                     <div>
                                         <label
@@ -226,6 +243,7 @@ export default function CreateInvitationPage() {
                                     </div>
                                 </div>
 
+                                {/* Venue */}
                                 <div>
                                     <label
                                         htmlFor="venue"
@@ -241,11 +259,99 @@ export default function CreateInvitationPage() {
                                         onChange={(event) =>
                                             setVenue(event.target.value)
                                         }
-                                        placeholder="Chennai, Tamil Nadu"
+                                        placeholder="Sri Kalyana Mandapam"
                                         className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                     />
                                 </div>
 
+                                {/* Venue Address */}
+                                <div>
+                                    <label
+                                        htmlFor="venueAddress"
+                                        className="mb-2 block text-sm font-medium text-slate-200"
+                                    >
+                                        Venue Address
+                                    </label>
+
+                                    <textarea
+                                        id="venueAddress"
+                                        value={venueAddress}
+                                        onChange={(event) =>
+                                            setVenueAddress(event.target.value)
+                                        }
+                                        placeholder="123 Temple Road, Thiruvannamalai, Tamil Nadu"
+                                        rows={3}
+                                        className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                    />
+                                </div>
+
+                                {/* Google Maps URL */}
+                                <div>
+                                    <label
+                                        htmlFor="mapsUrl"
+                                        className="mb-2 block text-sm font-medium text-slate-200"
+                                    >
+                                        Google Maps URL
+                                    </label>
+
+                                    <input
+                                        id="mapsUrl"
+                                        type="url"
+                                        value={mapsUrl}
+                                        onChange={(event) =>
+                                            setMapsUrl(event.target.value)
+                                        }
+                                        placeholder="https://maps.app.goo.gl/..."
+                                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                    />
+                                </div>
+
+                                {/* Coordinates */}
+                                <div className="grid gap-6 sm:grid-cols-2">
+                                    <div>
+                                        <label
+                                            htmlFor="latitude"
+                                            className="mb-2 block text-sm font-medium text-slate-200"
+                                        >
+                                            Latitude
+                                        </label>
+
+                                        <input
+                                            id="latitude"
+                                            type="number"
+                                            step="any"
+                                            value={latitude}
+                                            onChange={(event) =>
+                                                setLatitude(event.target.value)
+                                            }
+                                            placeholder="12.2253"
+                                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label
+                                            htmlFor="longitude"
+                                            className="mb-2 block text-sm font-medium text-slate-200"
+                                        >
+                                            Longitude
+                                        </label>
+
+                                        <input
+                                            id="longitude"
+                                            type="number"
+                                            step="any"
+                                            value={longitude}
+                                            onChange={(event) =>
+                                                setLongitude(event.target.value)
+                                            }
+                                            placeholder="79.0747"
+                                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Invitation Message */}
                                 <div>
                                     <label
                                         htmlFor="message"
@@ -266,12 +372,14 @@ export default function CreateInvitationPage() {
                                     />
                                 </div>
 
+                                {/* Save Message */}
                                 {saveMessage && (
                                     <div
-                                        className={`rounded-xl border px-4 py-3 text-sm ${savedSlug
+                                        className={`rounded-xl border px-4 py-3 text-sm ${
+                                            savedSlug
                                                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
                                                 : "border-red-500/30 bg-red-500/10 text-red-300"
-                                            }`}
+                                        }`}
                                     >
                                         <p>{saveMessage}</p>
 
@@ -283,6 +391,7 @@ export default function CreateInvitationPage() {
                                     </div>
                                 )}
 
+                                {/* Actions */}
                                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                                     <button
                                         type="submit"
@@ -304,6 +413,7 @@ export default function CreateInvitationPage() {
                             </div>
                         </form>
 
+                        {/* Theme Customizer */}
                         <ThemeCustomizer
                             template={selectedTemplate}
                             originalTemplate={
@@ -313,6 +423,7 @@ export default function CreateInvitationPage() {
                         />
                     </div>
 
+                    {/* Live Preview */}
                     <aside className="h-fit lg:sticky lg:top-24">
                         <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
@@ -331,7 +442,11 @@ export default function CreateInvitationPage() {
                                     }
                                     date={
                                         date
-                                            ? `${date}${time ? ` • ${time}` : ""}`
+                                            ? `${date}${
+                                                  time
+                                                      ? ` • ${time}`
+                                                      : ""
+                                              }`
                                             : "Saturday, 24 October 2026"
                                     }
                                     venue={
@@ -345,5 +460,13 @@ export default function CreateInvitationPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function CreateInvitationPage() {
+    return (
+        <Suspense fallback={null}>
+            <CreateInvitationPageContent />
+        </Suspense>
     );
 }
