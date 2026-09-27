@@ -52,6 +52,9 @@ export default async function PublicInvitationPage({
   const invitationVenue =
     invitation.venue || "Venue to be announced";
 
+  const invitationAddress =
+    invitation.venueAddress || "Address to be announced";
+
   return (
     <main
       className="min-h-screen px-6 py-12"
@@ -112,6 +115,7 @@ export default async function PublicInvitationPage({
 
         {/* Event Details */}
         <section className="mt-10 grid gap-6 sm:grid-cols-3">
+          {/* Date */}
           <div
             className="rounded-2xl border p-6 text-center"
             style={{
@@ -138,6 +142,7 @@ export default async function PublicInvitationPage({
             </p>
           </div>
 
+          {/* Time */}
           <div
             className="rounded-2xl border p-6 text-center"
             style={{
@@ -164,6 +169,7 @@ export default async function PublicInvitationPage({
             </p>
           </div>
 
+          {/* Venue */}
           <div
             className="rounded-2xl border p-6 text-center"
             style={{
@@ -188,6 +194,50 @@ export default async function PublicInvitationPage({
             >
               {invitation.venue || "To be announced"}
             </p>
+          </div>
+        </section>
+
+        {/* Event Location */}
+        <section className="mx-auto mt-6 max-w-4xl">
+          <div
+            className="rounded-2xl border p-6 text-center"
+            style={{
+              borderColor: `${template.theme.primaryColor}55`,
+              backgroundColor: `${template.theme.primaryColor}12`,
+            }}
+          >
+            <p
+              className="text-xs font-semibold uppercase tracking-[0.2em]"
+              style={{
+                color: template.theme.accentColor,
+              }}
+            >
+              Location
+            </p>
+
+            <p
+              className="mt-3 text-base font-semibold leading-7"
+              style={{
+                color: template.theme.textColor,
+              }}
+            >
+              {invitationAddress}
+            </p>
+
+            {invitation.mapsUrl && (
+              <a
+                href={invitation.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition hover:opacity-90"
+                style={{
+                  backgroundColor: template.theme.primaryColor,
+                  color: template.theme.textColor,
+                }}
+              >
+                Open in Google Maps
+              </a>
+            )}
           </div>
         </section>
 

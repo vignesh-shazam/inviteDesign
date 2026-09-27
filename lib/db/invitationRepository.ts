@@ -8,6 +8,10 @@ type CreateInvitationInput = {
   eventDate?: string;
   eventTime?: string;
   venue?: string;
+  venueAddress?: string;
+  latitude?: number;
+  longitude?: number;
+  mapsUrl?: string;
   message?: string;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
@@ -23,6 +27,10 @@ type InvitationRow = {
   event_date: string | null;
   event_time: string | null;
   venue: string | null;
+  venue_address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  maps_url: string | null;
   message: string | null;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
@@ -44,6 +52,10 @@ function mapInvitationRow(
     eventDate: row.event_date ?? "",
     eventTime: row.event_time ?? "",
     venue: row.venue ?? "",
+    venueAddress: row.venue_address ?? "",
+    latitude: row.latitude,
+    longitude: row.longitude,
+    mapsUrl: row.maps_url ?? "",
     message: row.message ?? "",
     theme: row.theme,
     typography: row.typography,
@@ -76,6 +88,10 @@ export async function createInvitation(
       event_date: input.eventDate || null,
       event_time: input.eventTime || null,
       venue: input.venue?.trim() || null,
+      venue_address: input.venueAddress?.trim() || null,
+      latitude: input.latitude ?? null,
+      longitude: input.longitude ?? null,
+      maps_url: input.mapsUrl?.trim() || null,
       message: input.message?.trim() || null,
       theme: input.theme,
       typography: input.typography,
