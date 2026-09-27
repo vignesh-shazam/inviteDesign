@@ -3,6 +3,7 @@ export type InvitationTemplate = {
   title: string;
   category: string;
   description: string;
+  previewImage: string;
   theme: {
     primaryColor: string;
     secondaryColor: string;
@@ -10,8 +11,10 @@ export type InvitationTemplate = {
     textColor: string;
     accentColor: string;
   };
+
   typography: {
     headingFont: string;
+
     bodyFont: string;
   };
 };

@@ -1,21 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 
-const featuredDesigns = [
-  {
-    title: "Elegant Wedding",
-    category: "Wedding",
-    description: "A timeless invitation for your special day.",
-  },
-  {
-    title: "Royal Celebration",
-    category: "Birthday",
-    description: "A grand design for an unforgettable celebration.",
-  },
-  {
-    title: "Modern Minimal",
-    category: "Special Event",
-    description: "A clean and modern invitation for every occasion.",
-  },
+import ComingSoonButton from "@/components/ui/ComingSoonButton";
+import { invitationTemplates } from "@/lib/templates";
+
+const featuredDesignIds = [
+  "elegant-wedding",
+  "royal-wedding",
+  "minimal-event",
 ];
 
 const steps = [
@@ -40,6 +32,12 @@ const steps = [
 ];
 
 export default function Home() {
+  const featuredDesigns = featuredDesignIds
+    .map((id) =>
+      invitationTemplates.find((template) => template.id === id),
+    )
+    .filter((template) => template !== undefined);
+
   return (
     <main>
       {/* Hero */}
@@ -67,18 +65,17 @@ export default function Home() {
 
             <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
               <Link
-                href="/create"
+                href="/signup"
                 className="rounded-full bg-violet-500 px-7 py-3.5 font-semibold text-white transition hover:bg-violet-400"
               >
                 Create Invitation
               </Link>
 
-              <Link
-                href="/designs"
+              <ComingSoonButton
                 className="rounded-full border border-slate-700 px-7 py-3.5 font-semibold text-white transition hover:bg-slate-900"
               >
                 Explore Designs
-              </Link>
+              </ComingSoonButton>
             </div>
 
             <p className="mt-6 text-sm text-slate-500">
@@ -102,30 +99,34 @@ export default function Home() {
               </h2>
 
               <p className="mt-4 max-w-2xl text-slate-400">
-                Start with a beautiful design and make it your own.
+                Beautiful invitation experiences are coming to MyInviteVerse.
               </p>
             </div>
 
-            <Link
-              href="/designs"
-              className="text-sm font-semibold text-violet-400 transition hover:text-violet-300"
-            >
+            <ComingSoonButton className="text-left text-sm font-semibold text-violet-400 transition hover:text-violet-300">
               View all designs →
-            </Link>
+            </ComingSoonButton>
           </div>
 
+          {/* Featured Design Cards */}
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {featuredDesigns.map((design) => (
               <article
-                key={design.title}
+                key={design.id}
                 className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition hover:-translate-y-1 hover:border-violet-500/50"
               >
-                <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-violet-950 via-slate-900 to-slate-950">
-                  <span className="text-5xl font-bold text-violet-400/40">
-                    ID
-                  </span>
+                {/* Preview Image */}
+                <div className="relative aspect-[2/3] overflow-hidden bg-gradient-to-br from-violet-950 via-slate-900 to-slate-950">
+                  <Image
+                    src={design.previewImage}
+                    alt={`${design.title} invitation design`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
                 </div>
 
+                {/* Details */}
                 <div className="p-6">
                   <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
                     {design.category}
@@ -136,7 +137,9 @@ export default function Home() {
                   </h3>
 
                   <p className="mt-2 text-sm leading-6 text-slate-400">
-                    {design.description}
+                    {design.id === "elegant-wedding"
+                      ? "A timeless invitation for your special day."
+                      : design.description}
                   </p>
                 </div>
               </article>
@@ -186,7 +189,9 @@ export default function Home() {
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
             Your special moment deserves
-            <span className="block text-violet-400">a special invitation.</span>
+            <span className="block text-violet-400">
+              a special invitation.
+            </span>
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-400">
@@ -194,7 +199,7 @@ export default function Home() {
           </p>
 
           <Link
-            href="/create"
+            href="/signup"
             className="mt-9 inline-block rounded-full bg-violet-500 px-8 py-3.5 font-semibold text-white transition hover:bg-violet-400"
           >
             Create Your Invitation
