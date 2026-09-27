@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import CalendarButtons from "@/components/invitation/CalendarButtons";
+import EventCountdown from "@/components/invitation/EventCountdown";
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 import InvitationScene from "@/components/invitation/3d/InvitationScene";
 import RSVPForm from "@/components/invitation/RSVPForm";
@@ -104,6 +105,14 @@ export default async function PublicInvitationPage({
             venue={invitationVenue}
           />
         </section>
+
+        {/* Event Countdown */}
+        <EventCountdown
+          eventDate={invitation.eventDate}
+          eventTime={invitation.eventTime}
+          primaryColor={template.theme.primaryColor}
+          textColor={template.theme.textColor}
+        />
 
         {/* WhatsApp Sharing */}
         <section className="mt-8 flex justify-center">
