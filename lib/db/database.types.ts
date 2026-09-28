@@ -34,6 +34,8 @@ export type Invitation = {
   cardId: string;
   slug: string;
   title: string;
+  person1Name: string;
+  person2Name: string;
   templateId: string;
   category: string;
   eventDate: string;
