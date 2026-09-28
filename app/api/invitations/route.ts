@@ -5,6 +5,8 @@ import type { Invitation } from "@/lib/db/database.types";
 
 type CreateInvitationRequest = {
   title: string;
+  person1Name?: string;
+  person2Name?: string;
   templateId: string;
   category: string;
   eventDate?: string;
@@ -59,44 +61,102 @@ export async function POST(request: Request) {
 
     const invitation = await createInvitation({
       title: body.title,
+
+      person1Name:
+        body.category === "Wedding"
+          ? body.person1Name?.trim() || null
+          : null,
+
+      person2Name:
+        body.category === "Wedding"
+          ? body.person2Name?.trim() || null
+          : null,
+
       templateId: body.templateId,
       category: body.category,
+
       eventDate: body.eventDate,
       eventTime: body.eventTime,
+
       venue: body.venue,
       venueAddress: body.venueAddress,
+
       latitude: body.latitude,
       longitude: body.longitude,
+
       mapsUrl: body.mapsUrl,
+
       message: body.message,
+
       theme: body.theme,
       typography: body.typography,
     });
 
     return NextResponse.json(
       {
-        message: "Invitation draft created successfully.",
+        message:
+          "Invitation draft created successfully.",
+
         invitation: {
           id: invitation.id,
           cardId: invitation.cardId,
           slug: invitation.slug,
+
           title: invitation.title,
-          templateId: invitation.templateId,
-          category: invitation.category,
-          eventDate: invitation.eventDate,
-          eventTime: invitation.eventTime,
-          venue: invitation.venue,
-          venueAddress: invitation.venueAddress,
-          latitude: invitation.latitude,
-          longitude: invitation.longitude,
-          mapsUrl: invitation.mapsUrl,
-          message: invitation.message,
-          theme: invitation.theme,
-          typography: invitation.typography,
-          status: invitation.status,
-          createdAt: invitation.createdAt,
-          updatedAt: invitation.updatedAt,
-          draftId: `${invitation.slug}-${invitation.cardId}`,
+
+          person1Name:
+            invitation.person1Name,
+
+          person2Name:
+            invitation.person2Name,
+
+          templateId:
+            invitation.templateId,
+
+          category:
+            invitation.category,
+
+          eventDate:
+            invitation.eventDate,
+
+          eventTime:
+            invitation.eventTime,
+
+          venue:
+            invitation.venue,
+
+          venueAddress:
+            invitation.venueAddress,
+
+          latitude:
+            invitation.latitude,
+
+          longitude:
+            invitation.longitude,
+
+          mapsUrl:
+            invitation.mapsUrl,
+
+          message:
+            invitation.message,
+
+          theme:
+            invitation.theme,
+
+          typography:
+            invitation.typography,
+
+          status:
+            invitation.status,
+
+          createdAt:
+            invitation.createdAt,
+
+          updatedAt:
+            invitation.updatedAt,
+
+          draftId:
+            `${invitation.slug}-${invitation.cardId}`,
         },
       },
       {
@@ -104,7 +164,10 @@ export async function POST(request: Request) {
       },
     );
   } catch (error) {
-    console.error("Create invitation error:", error);
+    console.error(
+      "Create invitation error:",
+      error,
+    );
 
     return NextResponse.json(
       {

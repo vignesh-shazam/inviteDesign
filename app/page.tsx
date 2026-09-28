@@ -1,14 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import ComingSoonButton from "@/components/ui/ComingSoonButton";
+import FeaturedDesigns from "@/components/home/FeaturedDesigns";
+import FloatingTools from "@/components/ui/FloatingTools";
 import { invitationTemplates } from "@/lib/templates";
-
-const featuredDesignIds = [
-  "elegant-wedding",
-  "royal-wedding",
-  "minimal-event",
-];
 
 const steps = [
   {
@@ -32,14 +27,9 @@ const steps = [
 ];
 
 export default function Home() {
-  const featuredDesigns = featuredDesignIds
-    .map((id) =>
-      invitationTemplates.find((template) => template.id === id),
-    )
-    .filter((template) => template !== undefined);
-
   return (
     <main>
+      <FloatingTools />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(139,92,246,0.18),_transparent_45%)]" />
@@ -72,7 +62,18 @@ export default function Home() {
               </Link>
 
               <ComingSoonButton
-                className="rounded-full border border-slate-700 px-7 py-3.5 font-semibold text-white transition hover:bg-slate-900"
+                className="
+              rounded-full
+              border border-slate-300
+              bg-white
+              px-7 py-3.5
+              font-semibold
+              text-slate-900
+              transition-all duration-300
+              hover:border-slate-900
+              hover:bg-slate-900
+              hover:text-white
+            "
               >
                 Explore Designs
               </ComingSoonButton>
@@ -108,43 +109,8 @@ export default function Home() {
             </ComingSoonButton>
           </div>
 
-          {/* Featured Design Cards */}
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {featuredDesigns.map((design) => (
-              <article
-                key={design.id}
-                className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition hover:-translate-y-1 hover:border-violet-500/50"
-              >
-                {/* Preview Image */}
-                <div className="relative aspect-[2/3] overflow-hidden bg-gradient-to-br from-violet-950 via-slate-900 to-slate-950">
-                  <Image
-                    src={design.previewImage}
-                    alt={`${design.title} invitation design`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </div>
-
-                {/* Details */}
-                <div className="p-6">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
-                    {design.category}
-                  </p>
-
-                  <h3 className="mt-2 text-xl font-semibold text-white">
-                    {design.title}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-slate-400">
-                    {design.id === "elegant-wedding"
-                      ? "A timeless invitation for your special day."
-                      : design.description}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+          {/* Featured Design Carousel */}
+          <FeaturedDesigns designs={invitationTemplates} />
         </div>
       </section>
 
@@ -206,6 +172,12 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      {/* Final CTA */}
+      <section className="border-t border-slate-800 py-24">
+        {/* existing CTA content */}
+      </section>
+
+      <FloatingTools />
     </main>
   );
 }
