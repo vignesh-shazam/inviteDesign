@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 type ThemeMode = "light" | "dark" | "glass";
 type OpenPanel = "theme" | "chat" | null;
@@ -184,11 +185,10 @@ export default function FloatingTools() {
               onClick={() =>
                 handleThemeChange("light")
               }
-              className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${
-                theme === "light"
-                  ? "bg-sky-500 text-white"
-                  : "text-slate-300 hover:bg-slate-800"
-              }`}
+              className={`flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${theme === "light"
+                ? "bg-sky-500 text-white"
+                : "text-slate-300 hover:bg-slate-800"
+                }`}
             >
               <span className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
@@ -214,11 +214,10 @@ export default function FloatingTools() {
               onClick={() =>
                 handleThemeChange("dark")
               }
-              className={`mt-2 flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${
-                theme === "dark"
-                  ? "bg-slate-800 text-white"
-                  : "text-slate-300 hover:bg-slate-800"
-              }`}
+              className={`mt-2 flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${theme === "dark"
+                ? "bg-slate-800 text-white"
+                : "text-slate-300 hover:bg-slate-800"
+                }`}
             >
               <span className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
@@ -244,11 +243,10 @@ export default function FloatingTools() {
               onClick={() =>
                 handleThemeChange("glass")
               }
-              className={`mt-2 flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${
-                theme === "glass"
-                  ? "bg-violet-500 text-white"
-                  : "text-slate-300 hover:bg-slate-800"
-              }`}
+              className={`mt-2 flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition ${theme === "glass"
+                ? "bg-violet-500 text-white"
+                : "text-slate-300 hover:bg-slate-800"
+                }`}
             >
               <span className="flex items-center gap-3">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
@@ -337,10 +335,10 @@ export default function FloatingTools() {
         )}
 
         {/* ===================================================
-            THEME BUTTON
-            =================================================== */}
+    THEME BUTTON
+    =================================================== */}
 
-        <button
+        <SparkleButton
           type="button"
           onClick={toggleTheme}
           aria-label={
@@ -352,13 +350,13 @@ export default function FloatingTools() {
           className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-blue-500 text-xl text-white shadow-xl transition hover:scale-105"
         >
           {isThemeOpen ? "✕" : "☀"}
-        </button>
+        </SparkleButton>
 
         {/* ===================================================
-            AI CHAT BUTTON
-            =================================================== */}
+    AI CHAT BUTTON
+    =================================================== */}
 
-        <button
+        <SparkleButton
           type="button"
           onClick={toggleChat}
           aria-label={
@@ -370,7 +368,7 @@ export default function FloatingTools() {
           className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-xl text-white shadow-xl transition hover:scale-105 hover:bg-blue-500"
         >
           {isChatOpen ? "✕" : "◯"}
-        </button>
+        </SparkleButton>
       </div>
     </>
   );

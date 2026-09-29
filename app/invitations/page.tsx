@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SparkleLink from "@/components/ui/SparkleLink";
 
 const invitations = [
   {
@@ -44,12 +45,12 @@ export default function InvitationsPage() {
             </p>
           </div>
 
-          <Link
+          <SparkleLink
             href="/create"
-            className="inline-flex items-center justify-center rounded-full bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400"
+            className="rounded-full bg-violet-500 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-violet-400"
           >
-            + Create Invitation
-          </Link>
+            Create Invitation
+          </SparkleLink>
         </div>
 
         {/* Invitation Cards */}
@@ -102,12 +103,12 @@ export default function InvitationsPage() {
                     View
                   </Link>
 
-                  <Link
+                  <SparkleLink
                     href={`/create?id=${invitation.id}`}
                     className="flex-1 rounded-full bg-violet-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-violet-400"
                   >
                     Edit
-                  </Link>
+                  </SparkleLink>
                 </div>
               </div>
             </article>

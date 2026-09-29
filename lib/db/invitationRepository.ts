@@ -30,8 +30,6 @@ type InvitationRow = {
   event_time: string | null;
   venue: string | null;
   venue_address: string | null;
-  // latitude: number | null;
-  // longitude: number | null;
   maps_url: string | null;
   message: string | null;
   theme: Invitation["theme"];
@@ -70,12 +68,6 @@ function mapInvitationRow(
 
     venueAddress:
       row.venue_address ?? "",
-
-    // latitude:
-    //   row.latitude,
-
-    // longitude:
-    //   row.longitude,
 
     mapsUrl:
       row.maps_url ?? "",
@@ -151,12 +143,6 @@ export async function createInvitation(
         venue_address:
           input.venueAddress?.trim() ||
           null,
-
-        // latitude:
-        //   input.latitude ?? null,
-
-        // longitude:
-        //   input.longitude ?? null,
 
         maps_url:
           input.mapsUrl?.trim() ||

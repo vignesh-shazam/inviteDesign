@@ -1,4 +1,6 @@
 "use client";
+import SparkleButton from "@/components/ui/SparkleButton";
+import SparkleLink from "@/components/ui/SparkleLink";
 
 type CalendarButtonsProps = {
   title: string;
@@ -266,7 +268,7 @@ export default function CalendarButtons({
         {hasCalendarDate ? (
           <div className="mt-5 flex flex-col justify-center gap-3 sm:flex-row">
             {googleCalendarUrl && (
-              <a
+              <SparkleLink
                 href={googleCalendarUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -277,10 +279,10 @@ export default function CalendarButtons({
                 }}
               >
                 📅 Google Calendar
-              </a>
+              </SparkleLink>
             )}
 
-            <button
+            <SparkleButton
               type="button"
               onClick={() =>
                 downloadIcsFile({
@@ -301,7 +303,7 @@ export default function CalendarButtons({
               }}
             >
               📥 Download Calendar (.ics)
-            </button>
+            </SparkleButton>
           </div>
         ) : (
           <p

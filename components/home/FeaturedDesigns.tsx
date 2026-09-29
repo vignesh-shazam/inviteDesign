@@ -2,7 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
+
 import type { InvitationTemplate } from "@/types/template";
+
+import SparkleButton from "@/components/ui/SparkleButton";
 
 type FeaturedDesignsProps = {
     designs: InvitationTemplate[];
@@ -32,18 +35,25 @@ export default function FeaturedDesigns({
     }
 
     const visibleDesigns = Array.from(
-        { length: Math.min(3, total) },
-        (_, offset) => designs[(currentIndex + offset) % total],
+        {
+            length: Math.min(3, total),
+        },
+        (_, offset) =>
+            designs[
+                (currentIndex + offset) % total
+            ],
     );
 
-    const currentDesign = designs[currentIndex];
+    const currentDesign =
+        designs[currentIndex];
 
     return (
         <div className="mt-12">
             {/* Desktop / Tablet */}
             <div className="relative hidden px-15 md:block">
+
                 {/* Previous */}
-                <button
+                <SparkleButton
                     type="button"
                     onClick={handlePrevious}
                     aria-label="Previous designs"
@@ -62,44 +72,54 @@ export default function FeaturedDesigns({
                     >
                         <path d="M15 18l-6-6 6-6" />
                     </svg>
-                </button>
+                </SparkleButton>
 
                 {/* Cards */}
                 <div className="grid grid-cols-3 gap-6">
-                    {visibleDesigns.map((design) => (
-                        <article
-                            key={design.id}
-                            className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition duration-300 hover:-translate-y-1 hover:border-violet-500/50"
-                        >
-                            <div className="relative aspect-[2/3] overflow-hidden bg-slate-900">
-                                <Image
-                                    src={design.previewImage}
-                                    alt={`${design.title} invitation design`}
-                                    fill
-                                    sizes="(max-width: 1024px) 33vw, 33vw"
-                                    className="object-cover transition duration-500 group-hover:scale-105"
-                                />
-                            </div>
+                    {visibleDesigns.map(
+                        (design) => (
+                            <article
+                                key={design.id}
+                                className="group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 transition duration-300 hover:-translate-y-1 hover:border-violet-500/50"
+                            >
+                                <div className="relative aspect-[2/3] overflow-hidden bg-slate-900">
+                                    <Image
+                                        src={
+                                            design.previewImage
+                                        }
+                                        alt={`${design.title} invitation design`}
+                                        fill
+                                        sizes="(max-width: 1024px) 33vw, 33vw"
+                                        className="object-cover transition duration-500 group-hover:scale-105"
+                                    />
+                                </div>
 
-                            <div className="p-6">
-                                <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
-                                    {design.category}
-                                </p>
+                                <div className="p-6">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
+                                        {
+                                            design.category
+                                        }
+                                    </p>
 
-                                <h3 className="mt-2 text-xl font-semibold text-white">
-                                    {design.title}
-                                </h3>
+                                    <h3 className="mt-2 text-xl font-semibold text-white">
+                                        {
+                                            design.title
+                                        }
+                                    </h3>
 
-                                <p className="mt-2 text-sm leading-6 text-slate-400">
-                                    {design.description}
-                                </p>
-                            </div>
-                        </article>
-                    ))}
+                                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                                        {
+                                            design.description
+                                        }
+                                    </p>
+                                </div>
+                            </article>
+                        ),
+                    )}
                 </div>
 
                 {/* Next */}
-                <button
+                <SparkleButton
                     type="button"
                     onClick={handleNext}
                     aria-label="Next designs"
@@ -118,7 +138,7 @@ export default function FeaturedDesigns({
                     >
                         <path d="M9 18l6-6-6-6" />
                     </svg>
-                </button>
+                </SparkleButton>
             </div>
 
             {/* Mobile */}
@@ -127,7 +147,9 @@ export default function FeaturedDesigns({
                     <article className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60">
                         <div className="relative aspect-[2/3] overflow-hidden bg-slate-900">
                             <Image
-                                src={currentDesign.previewImage}
+                                src={
+                                    currentDesign.previewImage
+                                }
                                 alt={`${currentDesign.title} invitation design`}
                                 fill
                                 sizes="100vw"
@@ -137,22 +159,28 @@ export default function FeaturedDesigns({
 
                         <div className="p-6">
                             <p className="text-xs font-semibold uppercase tracking-wider text-violet-400">
-                                {currentDesign.category}
+                                {
+                                    currentDesign.category
+                                }
                             </p>
 
                             <h3 className="mt-2 text-xl font-semibold text-white">
-                                {currentDesign.title}
+                                {
+                                    currentDesign.title
+                                }
                             </h3>
 
                             <p className="mt-2 text-sm leading-6 text-slate-400">
-                                {currentDesign.description}
+                                {
+                                    currentDesign.description
+                                }
                             </p>
                         </div>
                     </article>
 
                     {/* Mobile Previous */}
                     {/*
-                    <button
+                    <SparkleButton
                         type="button"
                         onClick={handlePrevious}
                         aria-label="Previous design"
@@ -170,12 +198,12 @@ export default function FeaturedDesigns({
                         >
                             <path d="M15 18l-6-6 6-6" />
                         </svg>
-                    </button>
+                    </SparkleButton>
                     */}
 
                     {/* Mobile Next */}
                     {/*
-                    <button
+                    <SparkleButton
                         type="button"
                         onClick={handleNext}
                         aria-label="Next design"
@@ -193,44 +221,53 @@ export default function FeaturedDesigns({
                         >
                             <path d="M9 18l6-6-6-6" />
                         </svg>
-                    </button>
+                    </SparkleButton>
                     */}
                 </div>
             </div>
 
             {/* Indicators */}
             <div className="mt-6 flex justify-center gap-2">
-                {designs.map((design, index) => (
-                    <button
-                        key={design.id}
-                        type="button"
-                        aria-label={`Show ${design.title}`}
-                        onClick={() => setCurrentIndex(index)}
-                        className={`h-2 rounded-full transition-all ${index === currentIndex
-                            ? "w-6 bg-violet-400"
-                            : "w-2 bg-slate-700 hover:bg-slate-500"
+                {designs.map(
+                    (design, index) => (
+                        <button
+                            key={design.id}
+                            type="button"
+                            aria-label={`Show ${design.title}`}
+                            onClick={() =>
+                                setCurrentIndex(
+                                    index,
+                                )
+                            }
+                            className={`h-2 rounded-full transition-all ${
+                                index ===
+                                currentIndex
+                                    ? "w-6 bg-violet-400"
+                                    : "w-2 bg-slate-700 hover:bg-slate-500"
                             }`}
-                    />
-                ))}
+                        />
+                    ),
+                )}
             </div>
 
             {/* Mobile Controls */}
             <div className="mt-6 flex justify-center gap-3 md:hidden">
-                <button
+
+                <SparkleButton
                     type="button"
                     onClick={handlePrevious}
                     className="rounded-full border border-slate-700 px-5 py-2 text-sm font-medium text-slate-300 transition hover:border-violet-500 hover:text-white"
                 >
                     Previous
-                </button>
+                </SparkleButton>
 
-                <button
+                <SparkleButton
                     type="button"
                     onClick={handleNext}
                     className="rounded-full border border-slate-700 px-5 py-2 text-sm font-medium text-slate-300 transition hover:border-violet-500 hover:text-white"
                 >
                     Next
-                </button>
+                </SparkleButton>
             </div>
         </div>
     );

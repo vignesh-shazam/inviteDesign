@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/db/supabase";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 export default function Header() {
   const router = useRouter();
@@ -236,13 +237,13 @@ export default function Header() {
               </Link>
 
               {/* Designs */}
-              <button
+              <SparkleButton
                 type="button"
                 onClick={handleDesignsClick}
                 className="w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-300 transition hover:bg-slate-900 hover:text-white"
               >
                 Designs
-              </button>
+              </SparkleButton>
 
               {/* My Invitations */}
               <Link

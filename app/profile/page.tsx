@@ -3,6 +3,7 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { getSupabaseClient } from "@/lib/db/supabase";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 const MAX_PROFILE_IMAGE_SIZE = 20 * 1024 * 1024;
 
@@ -456,7 +457,7 @@ export default function ProfilePage() {
           {/* Edit Mode */}
           {isEditing ? (
             <div className="flex flex-col gap-3 sm:flex-row">
-              <button
+              <SparkleButton
                 type="button"
                 onClick={handleSaveProfile}
                 disabled={saving || uploadingImage}
@@ -467,7 +468,7 @@ export default function ProfilePage() {
                   : saving
                     ? "Saving..."
                     : "Save Changes"}
-              </button>
+              </SparkleButton>
 
               <button
                 type="button"
@@ -479,7 +480,7 @@ export default function ProfilePage() {
               </button>
             </div>
           ) : (
-            <button
+            <SparkleButton
               type="button"
               onClick={() => {
                 setIsEditing(true);
@@ -489,7 +490,7 @@ export default function ProfilePage() {
               className="w-full rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
             >
               Edit Profile
-            </button>
+            </SparkleButton>
           )}
         </div>
 

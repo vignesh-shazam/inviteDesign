@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "@/lib/auth/authService";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -127,11 +128,10 @@ export default function LoginPage() {
                   placeholder="Enter your email"
                   autoComplete="email"
                   disabled={isLoading}
-                  className={`w-full rounded-xl border bg-slate-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 disabled:cursor-not-allowed disabled:opacity-60 ${
-                    emailTouched && email && !isEmailValid
+                  className={`w-full rounded-xl border bg-slate-950 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 disabled:cursor-not-allowed disabled:opacity-60 ${emailTouched && email && !isEmailValid
                       ? "border-red-500 focus:border-red-500"
                       : "border-slate-700 focus:border-violet-500"
-                  } focus:ring-2 focus:ring-violet-500/20`}
+                    } focus:ring-2 focus:ring-violet-500/20`}
                 />
 
                 {emailTouched &&
@@ -178,12 +178,11 @@ export default function LoginPage() {
                     placeholder="Enter your password"
                     autoComplete="current-password"
                     disabled={isLoading}
-                    className={`w-full rounded-xl border bg-slate-950 px-4 py-3 pr-12 text-sm text-white outline-none transition placeholder:text-slate-500 disabled:cursor-not-allowed disabled:opacity-60 ${
-                      passwordTouched &&
-                      password.length === 0
+                    className={`w-full rounded-xl border bg-slate-950 px-4 py-3 pr-12 text-sm text-white outline-none transition placeholder:text-slate-500 disabled:cursor-not-allowed disabled:opacity-60 ${passwordTouched &&
+                        password.length === 0
                         ? "border-red-500"
                         : "border-slate-700 focus:border-violet-500"
-                    } focus:ring-2 focus:ring-violet-500/20`}
+                      } focus:ring-2 focus:ring-violet-500/20`}
                   />
 
                   <button
@@ -271,13 +270,13 @@ export default function LoginPage() {
               )}
 
               {/* Login Button */}
-              <button
+              <SparkleButton
                 type="submit"
                 disabled={isLoading}
                 className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isLoading ? "Signing In..." : "Login"}
-              </button>
+              </SparkleButton>
             </form>
 
             {/* Divider */}

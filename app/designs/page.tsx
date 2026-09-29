@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { invitationTemplates } from "@/lib/templates";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 export default function DesignsPage() {
   const router = useRouter();
@@ -67,7 +68,7 @@ export default function DesignsPage() {
                 </p>
 
                 {/* Use Design */}
-                <button
+                <SparkleButton
                   type="button"
                   onClick={() =>
                     handleUseDesign(template.id)
@@ -75,7 +76,7 @@ export default function DesignsPage() {
                   className="mt-5 w-full rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
                 >
                   Use This Design
-                </button>
+                </SparkleButton>
               </div>
             </article>
           ))}

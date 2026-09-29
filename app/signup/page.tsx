@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signUp } from "@/lib/auth/authService";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -383,11 +384,10 @@ export default function SignupPage() {
                 {confirmPasswordTouched &&
                   confirmPassword.length > 0 && (
                     <p
-                      className={`mt-2 text-xs ${
-                        isConfirmPasswordValid
+                      className={`mt-2 text-xs ${isConfirmPasswordValid
                           ? "text-emerald-400"
                           : "text-red-400"
-                      }`}
+                        }`}
                     >
                       {isConfirmPasswordValid
                         ? "✓ Passwords match"
@@ -411,7 +411,7 @@ export default function SignupPage() {
               )}
 
               {/* Sign Up Button */}
-              <button
+              <SparkleButton
                 type="submit"
                 disabled={isLoading}
                 className="w-full rounded-xl bg-violet-500 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
@@ -419,7 +419,7 @@ export default function SignupPage() {
                 {isLoading
                   ? "Creating Account..."
                   : "Sign Up"}
-              </button>
+              </SparkleButton>
             </form>
 
             {/* Divider */}

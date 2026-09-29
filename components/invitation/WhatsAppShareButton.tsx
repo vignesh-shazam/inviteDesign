@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SparkleButton from "@/components/ui/SparkleButton";
 
 type WhatsAppShareButtonProps = {
   title: string;
@@ -116,7 +117,7 @@ export default function WhatsAppShareButton({
     <div className="flex w-full flex-col items-center gap-3">
       <div className="flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
         {/* WhatsApp Share */}
-        <button
+        <SparkleButton
           type="button"
           onClick={handleWhatsAppShare}
           className="inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white transition hover:scale-[1.02] hover:opacity-90 sm:w-auto"
@@ -139,10 +140,10 @@ export default function WhatsAppShareButton({
           </svg>
 
           Share on WhatsApp
-        </button>
+        </SparkleButton>
 
         {/* Copy Link */}
-        <button
+        <SparkleButton
           type="button"
           onClick={handleCopyLink}
           className="inline-flex w-full items-center justify-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition hover:opacity-80 sm:w-auto"
@@ -174,10 +175,10 @@ export default function WhatsAppShareButton({
           </svg>
 
           Copy Link
-        </button>
+        </SparkleButton>
 
         {/* Native Share */}
-        <button
+        <SparkleButton
           type="button"
           onClick={handleNativeShare}
           className="inline-flex w-full items-center justify-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold transition hover:opacity-80 sm:w-auto"
@@ -215,7 +216,7 @@ export default function WhatsAppShareButton({
           </svg>
 
           Share
-        </button>
+        </SparkleButton>
       </div>
 
       {/* Share Feedback */}
