@@ -2,6 +2,7 @@ import type { InvitationTemplate as InvitationTemplateType } from "@/types/templ
 
 type InvitationTemplateProps = {
     template: InvitationTemplateType;
+    category?: string;
     title?: string;
     person1Name?: string;
     person2Name?: string;
@@ -11,29 +12,33 @@ type InvitationTemplateProps = {
 
 export default function InvitationTemplate({
     template,
+    category,
     title = "You're Invited",
-    person1Name = "Person 1",
-    person2Name = "Person 2",
+    person1Name = "",
+    person2Name = "",
     date = "Saturday, 24 October 2026",
     venue = "Chennai, Tamil Nadu",
 }: InvitationTemplateProps) {
-    const hasPersonNames =
-        person1Name.trim() &&
-        person2Name.trim();
+    const displayCategory =
+        category || template.category;
 
-    const displayNames =
-        hasPersonNames
-            ? `${person1Name.trim()} & ${person2Name.trim()}`
-            : "Person 1 & Person 2";
+    const hasPersonNames =
+        displayCategory === "Wedding" &&
+        Boolean(person1Name.trim()) &&
+        Boolean(person2Name.trim());
+
+    const displayNames = hasPersonNames
+        ? `${person1Name.trim()} & ${person2Name.trim()}`
+        : "";
 
     return (
         <div
             className="mx-auto w-full max-w-md overflow-hidden rounded-3xl border shadow-2xl"
             style={{
                 backgroundColor:
-                    template.theme
-                        .backgroundColor,
-                borderColor: `${template.theme.primaryColor}66`,
+                    template.theme.backgroundColor,
+                borderColor:
+                    `${template.theme.primaryColor}66`,
             }}
         >
             <div
@@ -48,52 +53,44 @@ export default function InvitationTemplate({
                     <p
                         className="text-xs font-semibold uppercase tracking-[0.3em]"
                         style={{
-                            color: template
-                                .theme
-                                .accentColor,
+                            color:
+                                template.theme.accentColor,
                         }}
                     >
-                        {template.category}
+                        {displayCategory}
                     </p>
 
                     {/* Event Title */}
                     <h2
                         className="mt-6 text-4xl font-semibold"
                         style={{
-                            color: template
-                                .theme
-                                .textColor,
+                            color:
+                                template.theme.textColor,
                             fontFamily:
-                                template.typography
-                                    .headingFont,
+                                template.typography.headingFont,
                         }}
                     >
                         {title}
                     </h2>
 
-                    {/* Divider */}
+                    {/* Decorative Divider */}
                     <div
                         className="mx-auto my-8 h-px w-20"
                         style={{
                             backgroundColor:
-                                template.theme
-                                    .accentColor,
+                                template.theme.accentColor,
                         }}
                     />
 
-                    {/* Person Names */}
-                    {template.category ===
-                        "Wedding" && (
+                    {/* Person Names - Wedding Only */}
+                    {hasPersonNames && (
                         <p
                             className="text-lg font-semibold"
                             style={{
-                                color: template
-                                    .theme
-                                    .textColor,
+                                color:
+                                    template.theme.textColor,
                                 fontFamily:
-                                    template
-                                        .typography
-                                        .headingFont,
+                                    template.typography.headingFont,
                             }}
                         >
                             {displayNames}
@@ -102,19 +99,13 @@ export default function InvitationTemplate({
 
                     {/* Date */}
                     <p
-                        className={`text-sm uppercase tracking-wider ${
-                            template.category ===
-                            "Wedding"
-                                ? "mt-6"
-                                : ""
-                        }`}
+                        className={`text-sm uppercase tracking-wider ${hasPersonNames ? "mt-6" : ""
+                            }`}
                         style={{
-                            color: template
-                                .theme
-                                .secondaryColor,
+                            color:
+                                template.theme.secondaryColor,
                             fontFamily:
-                                template.typography
-                                    .bodyFont,
+                                template.typography.bodyFont,
                         }}
                     >
                         {date}
@@ -122,14 +113,11 @@ export default function InvitationTemplate({
 
                     {/* Venue */}
                     <p
-                        className="mt-3 text-sm"
+                        className="mt-3 max-w-full break-words px-2 text-sm leading-6"
                         style={{
-                            color: template
-                                .theme
-                                .secondaryColor,
-                            fontFamily:
-                                template.typography
-                                    .bodyFont,
+                            color: template.theme.secondaryColor,
+                            fontFamily: template.typography.bodyFont,
+                            overflowWrap: "anywhere",
                         }}
                     >
                         {venue}
@@ -140,9 +128,10 @@ export default function InvitationTemplate({
                         type="button"
                         className="mt-10 rounded-full border px-6 py-3 text-sm font-semibold transition hover:opacity-80"
                         style={{
-                            borderColor: `${template.theme.accentColor}80`,
-                            color: template.theme
-                                .accentColor,
+                            borderColor:
+                                `${template.theme.accentColor}80`,
+                            color:
+                                template.theme.accentColor,
                         }}
                     >
                         View Invitation

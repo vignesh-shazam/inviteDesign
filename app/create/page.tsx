@@ -1,44 +1,81 @@
 "use client";
 
-import { FormEvent, Suspense, useState } from "react";
+import {
+    FormEvent,
+    Suspense,
+    useState,
+} from "react";
+
 import Link from "next/link";
+
 import { useSearchParams } from "next/navigation";
 
 import { getTemplateById } from "@/lib/templates";
-import type { InvitationTemplate as InvitationTemplateType } from "@/types/template";
+
+import type {
+    InvitationTemplate as InvitationTemplateType,
+} from "@/types/template";
+
+import GoogleMapsLocationPicker from "@/components/invitation/GoogleMapsLocationPicker";
 
 import ThemeCustomizer from "@/components/invitation/ThemeCustomizer";
+
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 
-const eventTitlePlaceholders: Record<string, string> = {
-    Wedding: "Arun & Priya Wedding",
-    Birthday: "Rahul's Birthday Celebration",
-    Engagement: "Arun & Priya Engagement",
-    Anniversary: "25th Wedding Anniversary",
-    "Baby Shower": "Baby Shower Celebration",
-    Housewarming: "Housewarming Ceremony",
-    Other: "Special Event Celebration",
+const eventTitlePlaceholders: Record<
+    string,
+    string
+> = {
+    Wedding:
+        "Arun & Priya Wedding",
+
+    Birthday:
+        "Rahul's Birthday Celebration",
+
+    Engagement:
+        "Arun & Priya Engagement",
+
+    Anniversary:
+        "25th Wedding Anniversary",
+
+    "Baby Shower":
+        "Baby Shower Celebration",
+
+    Housewarming:
+        "Housewarming Ceremony",
+
+    Other:
+        "Special Event Celebration",
 };
 
 function CreateInvitationPageContent() {
-    const searchParams = useSearchParams();
+    const searchParams =
+        useSearchParams();
 
     const templateId =
-        searchParams.get("template") ?? "elegant-wedding";
+        searchParams.get("template") ??
+        "elegant-wedding";
 
-    const defaultTemplate = getTemplateById(templateId);
+    const defaultTemplate =
+        getTemplateById(
+            templateId,
+        );
 
     const [selectedTemplate, setSelectedTemplate] =
         useState<InvitationTemplateType>(
             defaultTemplate ??
-                getTemplateById("elegant-wedding")!,
+                getTemplateById(
+                    "elegant-wedding",
+                )!,
         );
 
-    const [eventType, setEventType] = useState(
-        selectedTemplate.category,
-    );
+    const [eventType, setEventType] =
+        useState(
+            selectedTemplate.category,
+        );
 
-    const [title, setTitle] = useState("");
+    const [title, setTitle] =
+        useState("");
 
     const [person1Name, setPerson1Name] =
         useState("");
@@ -46,20 +83,38 @@ function CreateInvitationPageContent() {
     const [person2Name, setPerson2Name] =
         useState("");
 
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [venue, setVenue] = useState("");
+    const [date, setDate] =
+        useState("");
+
+    const [time, setTime] =
+        useState("");
+
+    const [venue, setVenue] =
+        useState("");
+
     const [venueAddress, setVenueAddress] =
         useState("");
-    const [mapsUrl, setMapsUrl] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [longitude, setLongitude] = useState("");
-    const [message, setMessage] = useState("");
 
-    const [isSaving, setIsSaving] = useState(false);
+    const [mapsUrl, setMapsUrl] =
+        useState("");
+
+    const [isLocationPickerOpen, setIsLocationPickerOpen] =
+        useState(false);
+
+    const [selectedLocationName, setSelectedLocationName] =
+        useState("");
+
+    const [message, setMessage] =
+        useState("");
+
+    const [isSaving, setIsSaving] =
+        useState(false);
+
     const [saveMessage, setSaveMessage] =
         useState("");
-    const [savedSlug, setSavedSlug] = useState("");
+
+    const [savedSlug, setSavedSlug] =
+        useState("");
 
     async function handleSubmit(
         event: FormEvent<HTMLFormElement>,
@@ -73,6 +128,7 @@ function CreateInvitationPageContent() {
             setSaveMessage(
                 "Please enter an event title.",
             );
+
             return;
         }
 
@@ -83,6 +139,7 @@ function CreateInvitationPageContent() {
             setSaveMessage(
                 "Please enter Person 1 name.",
             );
+
             return;
         }
 
@@ -93,67 +150,73 @@ function CreateInvitationPageContent() {
             setSaveMessage(
                 "Please enter Person 2 name.",
             );
+
             return;
         }
 
         setIsSaving(true);
 
         try {
-            const response = await fetch(
-                "/api/invitations",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/json",
+            const response =
+                await fetch(
+                    "/api/invitations",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                        },
+
+                        body:
+                            JSON.stringify({
+                                title:
+                                    title.trim(),
+
+                                person1Name:
+                                    eventType ===
+                                    "Wedding"
+                                        ? person1Name.trim()
+                                        : undefined,
+
+                                person2Name:
+                                    eventType ===
+                                    "Wedding"
+                                        ? person2Name.trim()
+                                        : undefined,
+
+                                templateId:
+                                    selectedTemplate.id,
+
+                                category:
+                                    eventType,
+
+                                eventDate:
+                                    date,
+
+                                eventTime:
+                                    time,
+
+                                venue:
+                                    venue.trim(),
+
+                                venueAddress:
+                                    venueAddress.trim(),
+
+                                mapsUrl:
+                                    mapsUrl.trim(),
+
+                                theme:
+                                    selectedTemplate.theme,
+
+                                typography:
+                                    selectedTemplate.typography,
+
+                                message:
+                                    message.trim(),
+                            }),
                     },
-                    body: JSON.stringify({
-                        title: title.trim(),
-
-                        person1Name:
-                            eventType === "Wedding"
-                                ? person1Name.trim()
-                                : undefined,
-
-                        person2Name:
-                            eventType === "Wedding"
-                                ? person2Name.trim()
-                                : undefined,
-
-                        templateId:
-                            selectedTemplate.id,
-
-                        category: eventType,
-
-                        eventDate: date,
-                        eventTime: time,
-
-                        venue: venue.trim(),
-                        venueAddress:
-                            venueAddress.trim(),
-
-                        mapsUrl: mapsUrl.trim(),
-
-                        latitude:
-                            latitude.trim() !== ""
-                                ? Number(latitude)
-                                : undefined,
-
-                        longitude:
-                            longitude.trim() !== ""
-                                ? Number(longitude)
-                                : undefined,
-
-                        theme:
-                            selectedTemplate.theme,
-
-                        typography:
-                            selectedTemplate.typography,
-
-                        message: message.trim(),
-                    }),
-                },
-            );
+                );
 
             const data =
                 await response.json();
@@ -163,6 +226,7 @@ function CreateInvitationPageContent() {
                     data.error ??
                         "Failed to save invitation.",
                 );
+
                 return;
             }
 
@@ -185,13 +249,14 @@ function CreateInvitationPageContent() {
     function handleEventTypeChange(
         nextEventType: string,
     ) {
-        setEventType(nextEventType);
+        setEventType(
+            nextEventType,
+        );
 
-        /*
-         * Person names are currently only
-         * applicable to Wedding.
-         */
-        if (nextEventType !== "Wedding") {
+        if (
+            nextEventType !==
+            "Wedding"
+        ) {
             setPerson1Name("");
             setPerson2Name("");
         }
@@ -199,10 +264,12 @@ function CreateInvitationPageContent() {
 
     return (
         <main className="min-h-screen bg-slate-950 px-6 py-16">
+
             <div className="mx-auto max-w-7xl">
 
                 {/* Page Header */}
                 <div className="mb-10">
+
                     <Link
                         href="/invitations"
                         className="text-sm text-slate-400 transition hover:text-white"
@@ -222,23 +289,32 @@ function CreateInvitationPageContent() {
                         Add your event details and
                         customize your invitation.
                     </p>
+
                 </div>
 
                 {/* Selected Design */}
                 <div className="mb-8 rounded-2xl border border-violet-500/20 bg-violet-500/5 p-5">
+
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-violet-400">
                         Selected Design
                     </p>
 
                     <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+
                         <h2 className="text-lg font-semibold text-white">
-                            {selectedTemplate.title}
+                            {
+                                selectedTemplate.title
+                            }
                         </h2>
 
                         <span className="text-sm text-slate-400">
-                            {selectedTemplate.category}
+                            {
+                                selectedTemplate.category
+                            }
                         </span>
+
                     </div>
+
                 </div>
 
                 <div className="grid gap-8 lg:grid-cols-[1fr_420px]">
@@ -248,13 +324,17 @@ function CreateInvitationPageContent() {
 
                         {/* Invitation Form */}
                         <form
-                            onSubmit={handleSubmit}
+                            onSubmit={
+                                handleSubmit
+                            }
                             className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8"
                         >
+
                             <div className="space-y-6">
 
                                 {/* Event Type */}
                                 <div>
+
                                     <label
                                         htmlFor="eventType"
                                         className="mb-2 block text-sm font-medium text-slate-200"
@@ -264,10 +344,16 @@ function CreateInvitationPageContent() {
 
                                     <select
                                         id="eventType"
-                                        value={eventType}
-                                        onChange={(event) =>
+                                        value={
+                                            eventType
+                                        }
+                                        onChange={(
+                                            event,
+                                        ) =>
                                             handleEventTypeChange(
-                                                event.target.value,
+                                                event
+                                                    .target
+                                                    .value,
                                             )
                                         }
                                         className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-violet-500"
@@ -299,11 +385,14 @@ function CreateInvitationPageContent() {
                                         <option>
                                             Other
                                         </option>
+
                                     </select>
+
                                 </div>
 
                                 {/* Event Title */}
                                 <div>
+
                                     <label
                                         htmlFor="title"
                                         className="mb-2 block text-sm font-medium text-slate-200"
@@ -314,10 +403,16 @@ function CreateInvitationPageContent() {
                                     <input
                                         id="title"
                                         type="text"
-                                        value={title}
-                                        onChange={(event) =>
+                                        value={
+                                            title
+                                        }
+                                        onChange={(
+                                            event,
+                                        ) =>
                                             setTitle(
-                                                event.target.value,
+                                                event
+                                                    .target
+                                                    .value,
                                             )
                                         }
                                         placeholder={
@@ -328,6 +423,7 @@ function CreateInvitationPageContent() {
                                         }
                                         className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                     />
+
                                 </div>
 
                                 {/* Wedding Person Names */}
@@ -337,6 +433,7 @@ function CreateInvitationPageContent() {
 
                                         {/* Person 1 */}
                                         <div>
+
                                             <label
                                                 htmlFor="person1Name"
                                                 className="mb-2 block text-sm font-medium text-slate-200"
@@ -362,10 +459,12 @@ function CreateInvitationPageContent() {
                                                 placeholder="Arun"
                                                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                             />
+
                                         </div>
 
                                         {/* Person 2 */}
                                         <div>
+
                                             <label
                                                 htmlFor="person2Name"
                                                 className="mb-2 block text-sm font-medium text-slate-200"
@@ -391,7 +490,9 @@ function CreateInvitationPageContent() {
                                                 placeholder="Priya"
                                                 className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                             />
+
                                         </div>
+
                                     </div>
                                 )}
 
@@ -400,6 +501,7 @@ function CreateInvitationPageContent() {
 
                                     {/* Date */}
                                     <div>
+
                                         <label
                                             htmlFor="date"
                                             className="mb-2 block text-sm font-medium text-slate-200"
@@ -410,19 +512,26 @@ function CreateInvitationPageContent() {
                                         <input
                                             id="date"
                                             type="date"
-                                            value={date}
-                                            onChange={(event) =>
+                                            value={
+                                                date
+                                            }
+                                            onChange={(
+                                                event,
+                                            ) =>
                                                 setDate(
-                                                    event.target
+                                                    event
+                                                        .target
                                                         .value,
                                                 )
                                             }
                                             className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-violet-500"
                                         />
+
                                     </div>
 
                                     {/* Time */}
                                     <div>
+
                                         <label
                                             htmlFor="time"
                                             className="mb-2 block text-sm font-medium text-slate-200"
@@ -433,20 +542,28 @@ function CreateInvitationPageContent() {
                                         <input
                                             id="time"
                                             type="time"
-                                            value={time}
-                                            onChange={(event) =>
+                                            value={
+                                                time
+                                            }
+                                            onChange={(
+                                                event,
+                                            ) =>
                                                 setTime(
-                                                    event.target
+                                                    event
+                                                        .target
                                                         .value,
                                                 )
                                             }
                                             className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-violet-500"
                                         />
+
                                     </div>
+
                                 </div>
 
                                 {/* Venue */}
                                 <div>
+
                                     <label
                                         htmlFor="venue"
                                         className="mb-2 block text-sm font-medium text-slate-200"
@@ -457,20 +574,27 @@ function CreateInvitationPageContent() {
                                     <input
                                         id="venue"
                                         type="text"
-                                        value={venue}
-                                        onChange={(event) =>
+                                        value={
+                                            venue
+                                        }
+                                        onChange={(
+                                            event,
+                                        ) =>
                                             setVenue(
-                                                event.target
+                                                event
+                                                    .target
                                                     .value,
                                             )
                                         }
                                         placeholder="Sri Kalyana Mandapam"
                                         className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                     />
+
                                 </div>
 
                                 {/* Venue Address */}
                                 <div>
+
                                     <label
                                         htmlFor="venueAddress"
                                         className="mb-2 block text-sm font-medium text-slate-200"
@@ -483,9 +607,12 @@ function CreateInvitationPageContent() {
                                         value={
                                             venueAddress
                                         }
-                                        onChange={(event) =>
+                                        onChange={(
+                                            event,
+                                        ) =>
                                             setVenueAddress(
-                                                event.target
+                                                event
+                                                    .target
                                                     .value,
                                             )
                                         }
@@ -493,88 +620,52 @@ function CreateInvitationPageContent() {
                                         rows={3}
                                         className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                     />
+
                                 </div>
 
-                                {/* Google Maps URL */}
+                                {/* Event Location */}
                                 <div>
+
                                     <label
-                                        htmlFor="mapsUrl"
+                                        htmlFor="mapsLocation"
                                         className="mb-2 block text-sm font-medium text-slate-200"
                                     >
-                                        Google Maps URL
+                                        Event Location
                                     </label>
 
                                     <input
-                                        id="mapsUrl"
-                                        type="url"
-                                        value={mapsUrl}
-                                        onChange={(event) =>
-                                            setMapsUrl(
-                                                event.target
-                                                    .value,
+                                        id="mapsLocation"
+                                        type="text"
+                                        readOnly
+                                        value={
+                                            selectedLocationName ||
+                                            (mapsUrl
+                                                ? "Location selected"
+                                                : "")
+                                        }
+                                        onClick={() =>
+                                            setIsLocationPickerOpen(
+                                                true,
                                             )
                                         }
-                                        placeholder="https://maps.app.goo.gl/..."
-                                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                        onFocus={() =>
+                                            setIsLocationPickerOpen(
+                                                true,
+                                            )
+                                        }
+                                        placeholder="Click to select location on map"
+                                        className="w-full cursor-pointer rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition hover:border-slate-600 focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20"
                                     />
-                                </div>
 
-                                {/* Coordinates */}
-                                <div className="grid gap-6 sm:grid-cols-2">
+                                    <p className="mt-2 text-xs text-slate-500">
+                                        Search for your venue or select a location directly on the map.
+                                    </p>
 
-                                    {/* Latitude */}
-                                    <div>
-                                        <label
-                                            htmlFor="latitude"
-                                            className="mb-2 block text-sm font-medium text-slate-200"
-                                        >
-                                            Latitude
-                                        </label>
-
-                                        <input
-                                            id="latitude"
-                                            type="number"
-                                            step="any"
-                                            value={latitude}
-                                            onChange={(event) =>
-                                                setLatitude(
-                                                    event.target
-                                                        .value,
-                                                )
-                                            }
-                                            placeholder="12.2253"
-                                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
-                                        />
-                                    </div>
-
-                                    {/* Longitude */}
-                                    <div>
-                                        <label
-                                            htmlFor="longitude"
-                                            className="mb-2 block text-sm font-medium text-slate-200"
-                                        >
-                                            Longitude
-                                        </label>
-
-                                        <input
-                                            id="longitude"
-                                            type="number"
-                                            step="any"
-                                            value={longitude}
-                                            onChange={(event) =>
-                                                setLongitude(
-                                                    event.target
-                                                        .value,
-                                                )
-                                            }
-                                            placeholder="79.0747"
-                                            className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
-                                        />
-                                    </div>
                                 </div>
 
                                 {/* Invitation Message */}
                                 <div>
+
                                     <label
                                         htmlFor="message"
                                         className="mb-2 block text-sm font-medium text-slate-200"
@@ -584,10 +675,15 @@ function CreateInvitationPageContent() {
 
                                     <textarea
                                         id="message"
-                                        value={message}
-                                        onChange={(event) =>
+                                        value={
+                                            message
+                                        }
+                                        onChange={(
+                                            event,
+                                        ) =>
                                             setMessage(
-                                                event.target
+                                                event
+                                                    .target
                                                     .value,
                                             )
                                         }
@@ -595,6 +691,7 @@ function CreateInvitationPageContent() {
                                         rows={5}
                                         className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
                                     />
+
                                 </div>
 
                                 {/* Save Message */}
@@ -606,8 +703,11 @@ function CreateInvitationPageContent() {
                                                 : "border-red-500/30 bg-red-500/10 text-red-300"
                                         }`}
                                     >
+
                                         <p>
-                                            {saveMessage}
+                                            {
+                                                saveMessage
+                                            }
                                         </p>
 
                                         {savedSlug && (
@@ -618,6 +718,7 @@ function CreateInvitationPageContent() {
                                                 }
                                             </p>
                                         )}
+
                                     </div>
                                 )}
 
@@ -626,7 +727,9 @@ function CreateInvitationPageContent() {
 
                                     <button
                                         type="submit"
-                                        disabled={isSaving}
+                                        disabled={
+                                            isSaving
+                                        }
                                         className="rounded-full bg-violet-500 px-6 py-3 font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
                                     >
                                         {isSaving
@@ -640,8 +743,11 @@ function CreateInvitationPageContent() {
                                     >
                                         Preview
                                     </Link>
+
                                 </div>
+
                             </div>
+
                         </form>
 
                         {/* Theme Customizer */}
@@ -657,10 +763,12 @@ function CreateInvitationPageContent() {
                                 setSelectedTemplate
                             }
                         />
+
                     </div>
 
                     {/* Live Preview */}
                     <aside className="h-fit lg:sticky lg:top-24">
+
                         <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6">
 
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-violet-400">
@@ -672,9 +780,13 @@ function CreateInvitationPageContent() {
                             </h2>
 
                             <div className="mt-6">
+
                                 <InvitationTemplate
                                     template={
                                         selectedTemplate
+                                    }
+                                    category={
+                                        eventType
                                     }
                                     title={
                                         title ||
@@ -700,11 +812,48 @@ function CreateInvitationPageContent() {
                                         "Chennai, Tamil Nadu"
                                     }
                                 />
+
                             </div>
+
                         </div>
+
                     </aside>
+
                 </div>
+
             </div>
+
+            {/* Location Picker */}
+            <GoogleMapsLocationPicker
+                isOpen={
+                    isLocationPickerOpen
+                }
+                onClose={() =>
+                    setIsLocationPickerOpen(
+                        false,
+                    )
+                }
+                onSelect={(
+                    location,
+                ) => {
+                    setSelectedLocationName(
+                        location.name,
+                    );
+
+                    setVenue(
+                        location.name,
+                    );
+
+                    setVenueAddress(
+                        location.address,
+                    );
+
+                    setMapsUrl(
+                        location.mapsUrl,
+                    );
+                }}
+            />
+
         </main>
     );
 }

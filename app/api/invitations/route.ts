@@ -13,8 +13,6 @@ type CreateInvitationRequest = {
   eventTime?: string;
   venue?: string;
   venueAddress?: string;
-  latitude?: number;
-  longitude?: number;
   mapsUrl?: string;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
@@ -81,9 +79,6 @@ export async function POST(request: Request) {
       venue: body.venue,
       venueAddress: body.venueAddress,
 
-      latitude: body.latitude,
-      longitude: body.longitude,
-
       mapsUrl: body.mapsUrl,
 
       message: body.message,
@@ -127,12 +122,6 @@ export async function POST(request: Request) {
 
           venueAddress:
             invitation.venueAddress,
-
-          latitude:
-            invitation.latitude,
-
-          longitude:
-            invitation.longitude,
 
           mapsUrl:
             invitation.mapsUrl,

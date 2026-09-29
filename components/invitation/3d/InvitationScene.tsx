@@ -16,7 +16,10 @@ import InvitationDecorations from "@/components/invitation/3d/InvitationDecorati
 
 type InvitationSceneProps = {
   template: InvitationTemplate;
+  category?: string;
   title?: string;
+  person1Name?: string;
+  person2Name?: string;
   date?: string;
   venue?: string;
 };
@@ -42,7 +45,10 @@ function InvitationGlow({
 
 function InvitationCard({
   template,
+  category,
   title,
+  person1Name,
+  person2Name,
   date,
   venue,
   isInteracting,
@@ -66,6 +72,18 @@ function InvitationCard({
     groupRef.current.position.y =
       Math.sin(time * 0.8) * 0.03;
   });
+
+  const displayCategory =
+    category || template.category;
+
+  const hasPersonNames =
+    displayCategory === "Wedding" &&
+    Boolean(person1Name?.trim()) &&
+    Boolean(person2Name?.trim());
+
+  const displayNames = hasPersonNames
+    ? `${person1Name!.trim()} & ${person2Name!.trim()}`
+    : "";
 
   return (
     <group ref={groupRef}>
@@ -92,7 +110,7 @@ function InvitationCard({
         />
       </mesh>
 
-      {/* Category */}
+      {/* Event Category */}
       <Text
         position={[0, 1.65, 0.15]}
         fontSize={0.16}
@@ -101,10 +119,10 @@ function InvitationCard({
         anchorY="middle"
         letterSpacing={0.08}
       >
-        {template.category.toUpperCase()}
+        {displayCategory.toUpperCase()}
       </Text>
 
-      {/* Main title */}
+      {/* Main Title */}
       <Text
         position={[0, 0.85, 0.15]}
         fontSize={0.38}
@@ -112,11 +130,12 @@ function InvitationCard({
         anchorX="center"
         anchorY="middle"
         maxWidth={2.8}
+        overflowWrap="break-word"
       >
         {title ?? "You're Invited"}
       </Text>
 
-      {/* Decorative divider */}
+      {/* Decorative Divider */}
       <mesh position={[0, 0.25, 0.15]}>
         <planeGeometry args={[0.9, 0.015]} />
 
@@ -125,41 +144,61 @@ function InvitationCard({
         />
       </mesh>
 
-      {/* Names */}
-      <Text
-        position={[0, -0.15, 0.15]}
-        fontSize={0.25}
-        color={template.theme.textColor}
-        anchorX="center"
-        anchorY="middle"
-      >
-        Vignesh & Guest
-      </Text>
+      {/* Person Names - Wedding Only */}
+      {hasPersonNames && (
+        <Text
+          position={[0, -0.15, 0.15]}
+          fontSize={0.25}
+          color={template.theme.textColor}
+          anchorX="center"
+          anchorY="middle"
+          maxWidth={2.8}
+        >
+          {displayNames}
+        </Text>
+      )}
 
       {/* Date */}
       <Text
-        position={[0, -0.75, 0.15]}
+        position={[
+          0,
+          hasPersonNames ? -0.75 : -0.15,
+          0.15,
+        ]}
         fontSize={0.14}
         color={template.theme.secondaryColor}
         anchorX="center"
         anchorY="middle"
+        maxWidth={2.8}
       >
         {date ?? "Saturday, 24 October 2026"}
       </Text>
 
       {/* Venue */}
       <Text
-        position={[0, -1.05, 0.15]}
+        position={[
+          0,
+          hasPersonNames ? -1.05 : -0.45,
+          0.15,
+        ]}
         fontSize={0.13}
         color={template.theme.secondaryColor}
         anchorX="center"
         anchorY="middle"
+        maxWidth={2.8}
+        overflowWrap="break-word"
       >
         {venue ?? "Chennai, Tamil Nadu"}
       </Text>
 
-      {/* Bottom decoration */}
-      <mesh position={[0, -1.65, 0.15]}>
+      {/* Bottom Decoration */}
+      <mesh
+        position={[
+          0,
+          hasPersonNames ? -1.65 : -1.35,
+          0.15,
+        ]}
+      >
         <circleGeometry args={[0.08, 32]} />
 
         <meshStandardMaterial
@@ -172,7 +211,10 @@ function InvitationCard({
 
 export default function InvitationScene({
   template,
+  category,
   title,
+  person1Name,
+  person2Name,
   date,
   venue,
 }: InvitationSceneProps) {
@@ -182,8 +224,12 @@ export default function InvitationScene({
     <div
       className="h-[520px] w-full overflow-hidden rounded-3xl border sm:h-[600px]"
       style={{
-        backgroundColor: template.theme.backgroundColor,
-        borderColor: `${template.theme.primaryColor}66`,
+        backgroundColor:
+          template.theme.backgroundColor,
+
+        borderColor:
+          `${template.theme.primaryColor}66`,
+
         touchAction: "none",
       }}
     >
@@ -198,43 +244,46 @@ export default function InvitationScene({
           powerPreference: "high-performance",
         }}
       >
-        {/* Ambient lighting */}
+        {/* Ambient Lighting */}
         <ambientLight intensity={1.5} />
 
-        {/* Main directional light */}
+        {/* Main Directional Light */}
         <directionalLight
           position={[4, 5, 6]}
           intensity={2}
           color={template.theme.secondaryColor}
         />
 
-        {/* Accent light */}
+        {/* Accent Light */}
         <pointLight
           position={[-4, -2, 4]}
           intensity={1}
           color={template.theme.accentColor}
         />
 
-        {/* Soft background glow */}
+        {/* Soft Background Glow */}
         <InvitationGlow
           color={template.theme.primaryColor}
         />
 
-        {/* Decorative elements */}
+        {/* Decorative Elements */}
         <InvitationDecorations
           color={template.theme.accentColor}
         />
 
-        {/* 3D invitation card */}
+        {/* 3D Invitation Card */}
         <InvitationCard
           template={template}
+          category={category}
           title={title}
+          person1Name={person1Name}
+          person2Name={person2Name}
           date={date}
           venue={venue}
           isInteracting={isInteracting}
         />
 
-        {/* Mouse + touch interaction */}
+        {/* Mouse + Touch Interaction */}
         <OrbitControls
           enablePan={false}
           minDistance={5}
