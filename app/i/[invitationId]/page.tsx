@@ -46,11 +46,10 @@ export default async function PublicInvitationPage({
   }
 
   const invitationDate = invitation.eventDate
-    ? `${invitation.eventDate}${
-        invitation.eventTime
-          ? ` • ${invitation.eventTime}`
-          : ""
-      }`
+    ? `${invitation.eventDate}${invitation.eventTime
+      ? ` • ${invitation.eventTime}`
+      : ""
+    }`
     : "Date to be announced";
 
   const invitationVenue =
@@ -109,7 +108,10 @@ export default async function PublicInvitationPage({
           <section>
             <InvitationScene
               template={template}
+              category={invitation.category}
               title={invitation.title}
+              person1Name={invitation.person1Name}
+              person2Name={invitation.person2Name}
               date={invitationDate}
               venue={invitationVenue}
             />
@@ -207,9 +209,10 @@ export default async function PublicInvitationPage({
               </p>
 
               <p
-                className="mt-3 text-base font-semibold"
+                className="mt-3 break-words text-base font-semibold leading-7"
                 style={{
                   color: template.theme.textColor,
+                  overflowWrap: "anywhere",
                 }}
               >
                 {invitation.venue || "To be announced"}
@@ -227,12 +230,13 @@ export default async function PublicInvitationPage({
               }}
             >
               <p
-                className="text-xs font-semibold uppercase tracking-[0.2em]"
+                className="mt-3 break-words text-base font-semibold leading-7"
                 style={{
-                  color: template.theme.accentColor,
+                  color: template.theme.textColor,
+                  overflowWrap: "anywhere",
                 }}
               >
-                Location
+                {invitationAddress}
               </p>
 
               <p
@@ -335,7 +339,10 @@ export default async function PublicInvitationPage({
 
             <InvitationTemplate
               template={template}
+              category={invitation.category}
               title={invitation.title}
+              person1Name={invitation.person1Name}
+              person2Name={invitation.person2Name}
               date={invitationDate}
               venue={invitationVenue}
             />
