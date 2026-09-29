@@ -42,8 +42,6 @@ export type Invitation = {
   eventTime: string;
   venue: string;
   venueAddress: string;
-  latitude: number | null;
-  longitude: number | null;
   mapsUrl: string;
   message: string;
   theme: InvitationTheme;
