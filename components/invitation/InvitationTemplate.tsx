@@ -1,4 +1,6 @@
-import type { InvitationTemplate as InvitationTemplateType } from "@/types/template";
+import type {
+    InvitationTemplate as InvitationTemplateType,
+} from "@/types/template";
 
 type InvitationTemplateProps = {
     template: InvitationTemplateType;
@@ -8,6 +10,8 @@ type InvitationTemplateProps = {
     person2Name?: string;
     date?: string;
     venue?: string;
+    venueAddress?: string;
+    message?: string;
 };
 
 export default function InvitationTemplate({
@@ -18,6 +22,8 @@ export default function InvitationTemplate({
     person2Name = "",
     date = "Saturday, 24 October 2026",
     venue = "Chennai, Tamil Nadu",
+    venueAddress = "",
+    message = "",
 }: InvitationTemplateProps) {
     const displayCategory =
         category || template.category;
@@ -47,7 +53,7 @@ export default function InvitationTemplate({
                     background: `radial-gradient(circle at center, ${template.theme.primaryColor}33, transparent 55%)`,
                 }}
             >
-                <div className="relative">
+                <div className="relative w-full">
 
                     {/* Event Category */}
                     <p
@@ -62,12 +68,13 @@ export default function InvitationTemplate({
 
                     {/* Event Title */}
                     <h2
-                        className="mt-6 text-4xl font-semibold"
+                        className="mt-6 break-words text-4xl font-semibold"
                         style={{
                             color:
                                 template.theme.textColor,
                             fontFamily:
                                 template.typography.headingFont,
+                            overflowWrap: "anywhere",
                         }}
                     >
                         {title}
@@ -85,12 +92,13 @@ export default function InvitationTemplate({
                     {/* Person Names - Wedding Only */}
                     {hasPersonNames && (
                         <p
-                            className="text-lg font-semibold"
+                            className="break-words text-lg font-semibold"
                             style={{
                                 color:
                                     template.theme.textColor,
                                 fontFamily:
                                     template.typography.headingFont,
+                                overflowWrap: "anywhere",
                             }}
                         >
                             {displayNames}
@@ -99,13 +107,15 @@ export default function InvitationTemplate({
 
                     {/* Date */}
                     <p
-                        className={`text-sm uppercase tracking-wider ${hasPersonNames ? "mt-6" : ""
-                            }`}
+                        className={`break-words text-sm uppercase tracking-wider ${
+                            hasPersonNames ? "mt-6" : ""
+                        }`}
                         style={{
                             color:
                                 template.theme.secondaryColor,
                             fontFamily:
                                 template.typography.bodyFont,
+                            overflowWrap: "anywhere",
                         }}
                     >
                         {date}
@@ -113,15 +123,50 @@ export default function InvitationTemplate({
 
                     {/* Venue */}
                     <p
-                        className="mt-3 max-w-full break-words px-2 text-sm leading-6"
+                        className="mt-3 break-words px-2 text-sm leading-6"
                         style={{
-                            color: template.theme.secondaryColor,
-                            fontFamily: template.typography.bodyFont,
+                            color:
+                                template.theme.secondaryColor,
+                            fontFamily:
+                                template.typography.bodyFont,
                             overflowWrap: "anywhere",
                         }}
                     >
                         {venue}
                     </p>
+
+                    {/* Venue Address */}
+                    {venueAddress.trim() && (
+                        <p
+                            className="mt-2 break-words px-2 text-xs leading-5"
+                            style={{
+                                color:
+                                    template.theme.secondaryColor,
+                                fontFamily:
+                                    template.typography.bodyFont,
+                                opacity: 0.8,
+                                overflowWrap: "anywhere",
+                            }}
+                        >
+                            {venueAddress}
+                        </p>
+                    )}
+
+                    {/* Invitation Message */}
+                    {message.trim() && (
+                        <p
+                            className="mx-auto mt-6 max-w-sm break-words px-2 text-sm leading-6"
+                            style={{
+                                color:
+                                    template.theme.textColor,
+                                fontFamily:
+                                    template.typography.bodyFont,
+                                overflowWrap: "anywhere",
+                            }}
+                        >
+                            {message}
+                        </p>
+                    )}
 
                     {/* View Invitation */}
                     <button

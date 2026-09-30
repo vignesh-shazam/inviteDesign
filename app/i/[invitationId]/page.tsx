@@ -230,19 +230,19 @@ export default async function PublicInvitationPage({
               }}
             >
               <p
-                className="mt-3 break-words text-base font-semibold leading-7"
+                className="text-xs font-semibold uppercase tracking-[0.2em]"
                 style={{
-                  color: template.theme.textColor,
-                  overflowWrap: "anywhere",
+                  color: template.theme.accentColor,
                 }}
               >
-                {invitationAddress}
+                Event Location
               </p>
 
               <p
-                className="mt-3 text-base font-semibold leading-7"
+                className="mt-4 break-words text-base font-semibold leading-7"
                 style={{
                   color: template.theme.textColor,
+                  overflowWrap: "anywhere",
                 }}
               >
                 {invitationAddress}
@@ -255,7 +255,8 @@ export default async function PublicInvitationPage({
                   rel="noopener noreferrer"
                   className="mt-5 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition hover:opacity-90"
                   style={{
-                    backgroundColor: template.theme.primaryColor,
+                    backgroundColor:
+                      template.theme.primaryColor,
                     color: template.theme.textColor,
                   }}
                 >
@@ -264,7 +265,6 @@ export default async function PublicInvitationPage({
               )}
             </div>
           </section>
-
           {/* Calendar */}
           <CalendarButtons
             title={invitation.title}
@@ -345,6 +345,8 @@ export default async function PublicInvitationPage({
               person2Name={invitation.person2Name}
               date={invitationDate}
               venue={invitationVenue}
+              venueAddress={invitationAddress}
+              message={invitation.message}
             />
           </section>
 
