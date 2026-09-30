@@ -183,7 +183,11 @@ article {
     border-color 250ms ease;
 }
 
-/* Date & Time input icons */
+
+/* =========================================================
+   DATE & TIME INPUT ICONS
+   ========================================================= */
+
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
@@ -194,4 +198,626 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="date"]::-webkit-calendar-picker-indicator:hover,
 input[type="time"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+}
+
+
+/* =========================================================
+   =========================================================
+   MYINVITEVERSE
+   LANDING PAGE ANIMATIONS
+   PHASE 10.3.2
+   =========================================================
+   ========================================================= */
+
+
+/* =========================================================
+   HERO ENTRANCE
+   ========================================================= */
+
+@keyframes landingHeroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-hero-item {
+  opacity: 0;
+  animation: landingHeroFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.landing-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.landing-delay-2 {
+  animation-delay: 0.22s;
+}
+
+.landing-delay-3 {
+  animation-delay: 0.34s;
+}
+
+.landing-delay-4 {
+  animation-delay: 0.46s;
+}
+
+.landing-delay-5 {
+  animation-delay: 0.58s;
+}
+
+
+/* =========================================================
+   HERO BACKGROUND ORBS
+   ========================================================= */
+
+@keyframes landingOrbLeft {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(35px, -25px, 0) scale(1.08);
+  }
+}
+
+@keyframes landingOrbRight {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-30px, 25px, 0) scale(1.06);
+  }
+}
+
+.landing-hero-orb-left {
+  animation: landingOrbLeft 10s ease-in-out infinite;
+}
+
+.landing-hero-orb-right {
+  animation: landingOrbRight 12s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HERO GRID
+   ========================================================= */
+
+.landing-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px),
+    linear-gradient(90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px);
+
+  background-size: 48px 48px;
+
+  mask-image: linear-gradient(to bottom,
+      black,
+      transparent 85%);
+}
+
+
+/* =========================================================
+   STATUS DOT
+   ========================================================= */
+
+@keyframes landingStatusPulse {
+
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+
+.landing-status-dot {
+  animation: landingStatusPulse 2s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HERO INVITATION FLOAT
+   ========================================================= */
+
+@keyframes landingPreviewFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.landing-preview-float {
+  animation: landingPreviewFloat 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   HERO PREVIEW GLOW
+   ========================================================= */
+
+@keyframes landingPreviewGlow {
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: scale(1.04);
+  }
+}
+
+.landing-preview-glow {
+  animation: landingPreviewGlow 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   INVITATION CARD
+   ========================================================= */
+
+@keyframes landingInvitationFloat {
+
+  0%,
+  100% {
+    transform: rotate(-4deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-2deg) translateY(-5px);
+  }
+}
+
+.landing-invitation-card {
+  animation: landingInvitationFloat 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   PREVIEW LIGHT
+   ========================================================= */
+
+@keyframes landingPreviewLight {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+}
+
+.landing-preview-light {
+  animation: landingPreviewLight 4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   DECORATIVE LIGHTS
+   ========================================================= */
+
+@keyframes landingLightOne {
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translateY(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes landingLightTwo {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translate(0, 0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(6px, -5px);
+  }
+}
+
+@keyframes landingLightThree {
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+.landing-light-one {
+  animation: landingLightOne 3s ease-in-out infinite;
+}
+
+.landing-light-two {
+  animation: landingLightTwo 3.5s ease-in-out infinite;
+}
+
+.landing-light-three {
+  animation: landingLightThree 2.5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   3D EXPERIENCE BADGE
+   ========================================================= */
+
+@keyframes landingBadgeGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(139, 92, 246, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.18);
+  }
+}
+
+.landing-experience-badge {
+  animation: landingBadgeGlow 3s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+@keyframes landingSectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-section-heading {
+  animation: landingSectionReveal 0.8s ease-out both;
+}
+
+
+/* =========================================================
+   CARD ENTRANCE
+   ========================================================= */
+
+@keyframes landingCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-card {
+  animation: landingCardReveal 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-card-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.landing-card-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.landing-card-delay-3 {
+  animation-delay: 0.3s;
+}
+
+.landing-card-delay-4 {
+  animation-delay: 0.4s;
+}
+
+.landing-card-delay-5 {
+  animation-delay: 0.5s;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+   ========================================================= */
+
+.landing-step {
+  animation: landingCardReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+@keyframes landingCtaGlow {
+
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-50%) scale(0.95);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+.landing-cta-glow {
+  animation: landingCtaGlow 5s ease-in-out infinite;
+}
+
+
+@keyframes landingCtaReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-cta-item {
+  animation: landingCtaReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.landing-cta-card {
+  transition:
+    border-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+}
+
+.landing-cta-card:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    0 25px 90px rgba(139, 92, 246, 0.16);
+}
+
+
+/* =========================================================
+   IMAGE PERFORMANCE
+   ========================================================= */
+
+.landing-card img {
+  will-change: transform;
+}
+
+
+/* =========================================================
+   MOBILE OPTIMIZATION
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .landing-hero-orb-left {
+    width: 300px !important;
+    height: 300px !important;
+    left: -120px !important;
+  }
+
+  .landing-hero-orb-right {
+    width: 260px !important;
+    height: 260px !important;
+    right: -120px !important;
+  }
+
+  .landing-preview-float {
+    animation-duration: 6s;
+  }
+
+  .landing-invitation-card {
+    animation-duration: 6s;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .landing-hero-item,
+  .landing-hero-orb-left,
+  .landing-hero-orb-right,
+  .landing-status-dot,
+  .landing-preview-float,
+  .landing-preview-glow,
+  .landing-invitation-card,
+  .landing-preview-light,
+  .landing-light-one,
+  .landing-light-two,
+  .landing-light-three,
+  .landing-experience-badge,
+  .landing-section-heading,
+  .landing-card,
+  .landing-step,
+  .landing-cta-glow,
+  .landing-cta-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .landing-card img {
+    transform: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =========================================================
+   MYINVITEVERSE
+   LANDING PAGE VIDEO SHOWCASE
+   PHASE 10.3.2
+   ========================================================= */
+
+
+/* =========================================================
+   VIDEO GLOW
+   ========================================================= */
+
+@keyframes landingVideoGlow {
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.04);
+  }
+}
+
+.landing-video-glow {
+  animation: landingVideoGlow 5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   VIDEO CONTAINER
+   ========================================================= */
+
+.landing-video-container {
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.08),
+    0 25px 80px rgba(0, 0, 0, 0.35);
+}
+
+
+/* =========================================================
+   VIDEO
+   ========================================================= */
+
+.landing-showcase-video {
+  display: block;
+  transform: scale(1.001);
+  transition:
+    transform 900ms ease,
+    filter 900ms ease;
+}
+
+.landing-video-container:hover .landing-showcase-video {
+  transform: scale(1.025);
+  filter: brightness(1.04);
+}
+
+
+/* =========================================================
+   VIDEO INNER GLOW
+   ========================================================= */
+
+.landing-video-inner-glow {
+  background:
+    radial-gradient(circle at 50% 0%,
+      rgba(167, 139, 250, 0.14),
+      transparent 38%),
+    radial-gradient(circle at 100% 100%,
+      rgba(217, 70, 239, 0.08),
+      transparent 40%);
+}
+
+
+/* =========================================================
+   LIVE PREVIEW BADGE
+   ========================================================= */
+
+@keyframes landingLivePulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(52, 211, 153, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 18px rgba(52, 211, 153, 0.15);
+  }
+}
+
+.landing-live-badge {
+  animation: landingLivePulse 2.8s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   MOBILE VIDEO OPTIMIZATION
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .landing-video-glow {
+    inset: 2rem;
+    filter: blur(70px);
+  }
+
+  .landing-showcase-video {
+    min-height: 420px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .landing-video-glow,
+  .landing-live-badge,
+  .landing-showcase-video {
+    animation: none !important;
+    transition: none !important;
+  }
 }

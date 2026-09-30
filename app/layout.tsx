@@ -3,8 +3,9 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
+
 export const metadata: Metadata = {
-  title: "InviteDesign — Create Memorable Invitations",
+  title: "MyInviteVerse — Create Memorable Invitations",
   description:
     "Create beautiful interactive and 3D digital invitations and share them instantly.",
 };
