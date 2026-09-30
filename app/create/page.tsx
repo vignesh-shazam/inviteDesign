@@ -55,9 +55,9 @@ function CreateInvitationPageContent() {
     const [selectedTemplate, setSelectedTemplate] =
         useState<InvitationTemplateType>(
             defaultTemplate ??
-                getTemplateById(
-                    "elegant-wedding",
-                )!,
+            getTemplateById(
+                "elegant-wedding",
+            )!,
         );
 
     const [eventType, setEventType] =
@@ -165,13 +165,13 @@ function CreateInvitationPageContent() {
 
                             person1Name:
                                 eventType ===
-                                "Wedding"
+                                    "Wedding"
                                     ? person1Name.trim()
                                     : undefined,
 
                             person2Name:
                                 eventType ===
-                                "Wedding"
+                                    "Wedding"
                                     ? person2Name.trim()
                                     : undefined,
 
@@ -214,7 +214,7 @@ function CreateInvitationPageContent() {
             if (!response.ok) {
                 setSaveMessage(
                     data.error ??
-                        "Failed to save invitation.",
+                    "Failed to save invitation.",
                 );
 
                 return;
@@ -378,7 +378,7 @@ function CreateInvitationPageContent() {
                                         }
                                         placeholder={
                                             eventTitlePlaceholders[
-                                                eventType
+                                            eventType
                                             ] ??
                                             "Enter your event title"
                                         }
@@ -389,63 +389,63 @@ function CreateInvitationPageContent() {
                                 {/* Wedding Person Names */}
                                 {eventType ===
                                     "Wedding" && (
-                                    <div className="grid gap-6 sm:grid-cols-2">
+                                        <div className="grid gap-6 sm:grid-cols-2">
 
-                                        {/* Person 1 */}
-                                        <div>
-                                            <label
-                                                htmlFor="person1Name"
-                                                className="mb-2 block text-sm font-medium text-slate-200"
-                                            >
-                                                Person 1 Name
-                                            </label>
+                                            {/* Person 1 */}
+                                            <div>
+                                                <label
+                                                    htmlFor="person1Name"
+                                                    className="mb-2 block text-sm font-medium text-slate-200"
+                                                >
+                                                    Person 1 Name
+                                                </label>
 
-                                            <input
-                                                id="person1Name"
-                                                type="text"
-                                                value={
-                                                    person1Name
-                                                }
-                                                onChange={(
-                                                    event,
-                                                ) =>
-                                                    setPerson1Name(
-                                                        event.target.value,
-                                                    )
-                                                }
-                                                placeholder="Arun"
-                                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
-                                            />
+                                                <input
+                                                    id="person1Name"
+                                                    type="text"
+                                                    value={
+                                                        person1Name
+                                                    }
+                                                    onChange={(
+                                                        event,
+                                                    ) =>
+                                                        setPerson1Name(
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Arun"
+                                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                                />
+                                            </div>
+
+                                            {/* Person 2 */}
+                                            <div>
+                                                <label
+                                                    htmlFor="person2Name"
+                                                    className="mb-2 block text-sm font-medium text-slate-200"
+                                                >
+                                                    Person 2 Name
+                                                </label>
+
+                                                <input
+                                                    id="person2Name"
+                                                    type="text"
+                                                    value={
+                                                        person2Name
+                                                    }
+                                                    onChange={(
+                                                        event,
+                                                    ) =>
+                                                        setPerson2Name(
+                                                            event.target.value,
+                                                        )
+                                                    }
+                                                    placeholder="Priya"
+                                                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
+                                                />
+                                            </div>
                                         </div>
-
-                                        {/* Person 2 */}
-                                        <div>
-                                            <label
-                                                htmlFor="person2Name"
-                                                className="mb-2 block text-sm font-medium text-slate-200"
-                                            >
-                                                Person 2 Name
-                                            </label>
-
-                                            <input
-                                                id="person2Name"
-                                                type="text"
-                                                value={
-                                                    person2Name
-                                                }
-                                                onChange={(
-                                                    event,
-                                                ) =>
-                                                    setPerson2Name(
-                                                        event.target.value,
-                                                    )
-                                                }
-                                                placeholder="Priya"
-                                                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-white placeholder:text-slate-600 outline-none transition focus:border-violet-500"
-                                            />
-                                        </div>
-                                    </div>
-                                )}
+                                    )}
 
                                 {/* Date & Time */}
                                 <div className="grid gap-6 sm:grid-cols-2">
@@ -605,11 +605,10 @@ function CreateInvitationPageContent() {
                                 {/* Save Message */}
                                 {saveMessage && (
                                     <div
-                                        className={`rounded-xl border px-4 py-3 text-sm ${
-                                            savedSlug
+                                        className={`rounded-xl border px-4 py-3 text-sm ${savedSlug
                                                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
                                                 : "border-red-500/30 bg-red-500/10 text-red-300"
-                                        }`}
+                                            }`}
                                     >
                                         <p>
                                             {saveMessage}
@@ -674,35 +673,19 @@ function CreateInvitationPageContent() {
 
                             <div className="mt-6">
                                 <InvitationTemplate
-                                    template={
-                                        selectedTemplate
-                                    }
-                                    category={
-                                        eventType
-                                    }
-                                    title={
-                                        title ||
-                                        "You're Invited"
-                                    }
-                                    person1Name={
-                                        person1Name
-                                    }
-                                    person2Name={
-                                        person2Name
-                                    }
+                                    template={selectedTemplate}
+                                    category={eventType}
+                                    title={title || "You're Invited"}
+                                    person1Name={person1Name}
+                                    person2Name={person2Name}
                                     date={
                                         date
-                                            ? `${date}${
-                                                  time
-                                                      ? ` • ${time}`
-                                                      : ""
-                                              }`
+                                            ? `${date}${time ? ` • ${time}` : ""}`
                                             : "Saturday, 24 October 2026"
                                     }
-                                    venue={
-                                        venue ||
-                                        "Chennai, Tamil Nadu"
-                                    }
+                                    venue={venue || "Chennai, Tamil Nadu"}
+                                    venueAddress={venueAddress}
+                                    message={message}
                                 />
                             </div>
                         </div>
