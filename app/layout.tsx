@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import HeaderVisibility from "@/components/layout/HeaderVisibility";
-import Footer from "@/components/layout/Footer";
+import AuthenticatedLayout from "@/components/layout/AuthenticatedLayout";
 import "./globals.css";
-
 
 export const metadata: Metadata = {
   title: "MyInviteVerse — Create Memorable Invitations",
@@ -18,9 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <HeaderVisibility />
-        {children}
-        <Footer />
+        <AuthenticatedLayout>
+          {children}
+        </AuthenticatedLayout>
       </body>
     </html>
   );
