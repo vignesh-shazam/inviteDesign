@@ -267,12 +267,16 @@ export default function LoginPage() {
                       Password
                     </label>
 
-                    <button
-                      type="button"
+                    {/* =================================================
+                        FORGOT PASSWORD
+                    ================================================== */}
+
+                    <Link
+                      href="/forgot-password"
                       className="text-xs text-violet-400 transition hover:text-violet-300"
                     >
                       Forgot password?
-                    </button>
+                    </Link>
 
                   </div>
 
@@ -333,6 +337,7 @@ export default function LoginPage() {
                           strokeLinejoin="round"
                         >
                           <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+
                           <circle
                             cx="12"
                             cy="12"
@@ -351,8 +356,11 @@ export default function LoginPage() {
                           strokeLinejoin="round"
                         >
                           <path d="m3 3 18 18" />
+
                           <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" />
+
                           <path d="M9.9 4.2A10.8 10.8 0 0 1 12 4c6.5 0 10 8 10 8a18.5 18.5 0 0 1-3.1 4.4" />
+
                           <path d="M6.6 6.6C3.6 8.7 2 12 2 12s3.5 8 10 8a10.8 10.8 0 0 0 2.1-.2" />
                         </svg>
                       )}
