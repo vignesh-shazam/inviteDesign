@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Header from "@/components/layout/Header";
+import HeaderVisibility from "@/components/layout/HeaderVisibility";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
+        <HeaderVisibility />
         {children}
         <Footer />
       </body>

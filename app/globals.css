@@ -821,3 +821,264 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     transition: none !important;
   }
 }
+
+/* =========================================================
+   CELEBRATION EFFECT
+   ========================================================= */
+
+.celebration-effect {
+  animation: celebrationFadeOut 1.5s ease-out forwards;
+}
+
+.celebration-center-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle,
+      rgba(167, 139, 250, 0.22),
+      rgba(217, 70, 239, 0.08) 40%,
+      transparent 72%);
+  filter: blur(25px);
+  animation: celebrationGlow 1.4s ease-out forwards;
+}
+
+
+/* =========================================================
+   SPARKLES
+   ========================================================= */
+
+.celebration-sparkle {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(167, 139, 250, 0.9),
+    0 0 30px rgba(217, 70, 239, 0.5);
+
+  clip-path: polygon(50% 0%,
+      61% 39%,
+      100% 50%,
+      61% 61%,
+      50% 100%,
+      39% 61%,
+      0% 50%,
+      39% 39%);
+
+  animation-name: celebrationSparkle;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+
+/* =========================================================
+   ROSE PETALS
+   ========================================================= */
+
+.celebration-rose-petal {
+  position: absolute;
+  display: block;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg,
+      #fda4af,
+      #f43f5e);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.25);
+
+  animation-name: celebrationRosePetal;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+
+/* =========================================================
+   CONFETTI
+   ========================================================= */
+
+.celebration-confetti {
+  position: absolute;
+  display: block;
+  border-radius: 2px;
+  background: linear-gradient(180deg,
+      #a78bfa,
+      #d946ef);
+
+  animation-name: celebrationConfetti;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+
+/* =========================================================
+   FIREWORKS
+   ========================================================= */
+
+.celebration-firework {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  background: #ffffff;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 22px rgba(167, 139, 250, 0.9);
+
+  animation-name: celebrationFirework;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+.celebration-particle-dot {
+  position: absolute;
+  display: block;
+  border-radius: 9999px;
+  background: #c4b5fd;
+  box-shadow: 0 0 14px rgba(196, 181, 253, 0.7);
+
+  animation-name: celebrationParticle;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes celebrationSparkle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.2) rotate(0deg);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(calc((var(--random-x, 0) * 1px)),
+        -120px,
+        0) scale(0.2) rotate(180deg);
+  }
+}
+
+@keyframes celebrationRosePetal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(40px, 180px, 0) rotate(360deg);
+  }
+}
+
+@keyframes celebrationConfetti {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(30px, 180px, 0) rotate(540deg);
+  }
+}
+
+@keyframes celebrationFirework {
+  0% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+
+  20% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(3.5);
+  }
+}
+
+@keyframes celebrationParticle {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.3);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-110px) scale(0);
+  }
+}
+
+@keyframes celebrationGlow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+}
+
+@keyframes celebrationFadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .celebration-effect,
+  .celebration-center-glow,
+  .celebration-particle {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
