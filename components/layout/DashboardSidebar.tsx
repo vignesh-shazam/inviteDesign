@@ -8,6 +8,7 @@ import { getSupabaseClient } from "@/lib/db/supabase";
 const mainNavigation = [
   { label: "Home", icon: "home", href: "/" },
   { label: "My Invitations", icon: "file", href: "/invitations" },
+  { label: "Wishes", icon: "sparkle", href: "/wishes" },
   { label: "Create Invitation", icon: "edit", href: "/create" },
   { label: "Events", icon: "calendar", href: "/events" },
   { label: "Designs", icon: "palette", href: "/designs" },
@@ -151,6 +152,14 @@ function Icon({
         <svg {...common}>
           <path d="m6 6 12 12" />
           <path d="m18 6-12 12" />
+        </svg>
+      );
+
+    case "sparkle":
+      return (
+        <svg {...common}>
+          <path d="m12 2-1.4 5.6L5 9l5.6 1.4L12 16l1.4-5.6L19 9l-5.6-1.4Z" />
+          <path d="m19 17-.7 2.3L16 20l2.3.7L19 23l.7-2.3L22 20l-2.3-.7Z" />
         </svg>
       );
 
