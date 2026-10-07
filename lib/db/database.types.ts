@@ -29,6 +29,15 @@ export type InvitationTypography = {
   bodyFont: string;
 };
 
+export type InvitationAIDesignSnapshot = {
+  type: string;
+  style: string;
+  layout: string;
+  colorTheme: string;
+  typography: string;
+  decoration: string;
+};
+
 export type Invitation = {
   id: string;
   cardId: string;
@@ -46,6 +55,7 @@ export type Invitation = {
   message: string;
   theme: InvitationTheme;
   typography: InvitationTypography;
+  aiDesign?: InvitationAIDesignSnapshot | null;
   status: InvitationStatus;
   createdAt: string;
   updatedAt: string;

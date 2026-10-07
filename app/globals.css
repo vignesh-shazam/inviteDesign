@@ -1082,3 +1082,256 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     opacity: 0 !important;
   }
 }
+
+
+/* =========================================================
+   MYINVITEVERSE
+   AI WISHES — ANIMATION SYSTEM
+   PHASE 4
+   =========================================================
+   ========================================================= */
+
+
+/* ─── Particle base ─────────────────────────────────────── */
+
+.wish-particle {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+
+/* ─── Confetti / birthday ───────────────────────────────── */
+
+@keyframes wishConfettiFall {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) rotate(0deg) scale(0.5);
+  }
+  10% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateY(110vh) rotate(720deg) scale(1);
+  }
+}
+
+.wish-particle-confetti {
+  border-radius: 2px;
+  animation: wishConfettiFall linear forwards;
+}
+
+
+/* ─── Hearts / romantic ─────────────────────────────────── */
+
+@keyframes wishHeartFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.4);
+  }
+  15% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateY(-110vh) scale(1.2);
+  }
+}
+
+.wish-particle-heart {
+  animation: wishHeartFloat ease-in forwards;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+
+/* ─── Stars / magical ───────────────────────────────────── */
+
+@keyframes wishStarTwinkle {
+  0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+  30%  { opacity: 1; transform: scale(1.3) rotate(90deg); }
+  60%  { opacity: 0.7; transform: scale(0.9) rotate(180deg); }
+  100% { opacity: 0; transform: scale(0) rotate(360deg); }
+}
+
+.wish-particle-star {
+  border-radius: 9999px;
+  clip-path: polygon(50% 0%,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0% 50%,39% 39%);
+  animation: wishStarTwinkle ease-in-out forwards;
+}
+
+
+/* ─── Sparkles / generic ────────────────────────────────── */
+
+@keyframes wishSparkleRise {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.3); }
+  20%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-80px) scale(0); }
+}
+
+.wish-particle-sparkle {
+  border-radius: 9999px;
+  animation: wishSparkleRise ease-out forwards;
+}
+
+
+/* ─── Petals / floral ───────────────────────────────────── */
+
+@keyframes wishPetalDrift {
+  0%   { opacity: 0; transform: translate(0, -20px) rotate(0deg); }
+  12%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(50px, 100vh) rotate(400deg); }
+}
+
+.wish-particle-petal {
+  border-radius: 100% 0 100% 0;
+  animation: wishPetalDrift ease-in forwards;
+}
+
+
+/* ─── Balloons ──────────────────────────────────────────── */
+
+@keyframes wishBalloonRise {
+  0%   { opacity: 0; transform: translateY(100px) scale(0.5); }
+  15%  { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-80vh) scale(0.8); }
+}
+
+.wish-particle-balloon {
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: wishBalloonRise ease-out forwards;
+}
+
+
+/* ─── Opening screen ────────────────────────────────────── */
+
+@keyframes wishOpeningPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.08); }
+}
+
+.wish-opening-glow {
+  animation: wishOpeningPulse 3s ease-in-out infinite;
+}
+
+@keyframes wishOpeningFadeIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wish-opening-item {
+  opacity: 0;
+  animation: wishOpeningFadeIn 0.7s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+.wish-opening-delay-1 { animation-delay: 0.3s; }
+.wish-opening-delay-2 { animation-delay: 0.7s; }
+.wish-opening-delay-3 { animation-delay: 1.1s; }
+.wish-opening-delay-4 { animation-delay: 1.5s; }
+.wish-opening-delay-5 { animation-delay: 1.9s; }
+
+
+/* ─── Tap-to-open button ────────────────────────────────── */
+
+@keyframes wishTapPulse {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; transform: scale(1); }
+  50%       { box-shadow: 0 0 0 12px transparent; transform: scale(1.04); }
+}
+
+.wish-tap-btn {
+  animation: wishTapPulse 2s ease-in-out infinite;
+}
+
+
+/* ─── Content reveal ────────────────────────────────────── */
+
+@keyframes wishRevealSlide {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.wish-reveal-item {
+  opacity: 0;
+  animation: wishRevealSlide 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+.wish-reveal-delay-1 { animation-delay: 0.1s; }
+.wish-reveal-delay-2 { animation-delay: 0.3s; }
+.wish-reveal-delay-3 { animation-delay: 0.55s; }
+.wish-reveal-delay-4 { animation-delay: 0.8s; }
+.wish-reveal-delay-5 { animation-delay: 1.1s; }
+
+
+/* ─── Reaction button ───────────────────────────────────── */
+
+@keyframes wishHeartBeat {
+  0%, 100% { transform: scale(1); }
+  30%       { transform: scale(1.35); }
+  60%       { transform: scale(0.9); }
+}
+
+.wish-heart-beat {
+  animation: wishHeartBeat 0.45s ease-out;
+}
+
+@keyframes wishReactionBurst {
+  0%   { opacity: 1; transform: scale(0.5) translateY(0); }
+  100% { opacity: 0; transform: scale(1.4) translateY(-30px); }
+}
+
+.wish-reaction-burst {
+  position: absolute;
+  pointer-events: none;
+  animation: wishReactionBurst 0.6s ease-out forwards;
+}
+
+
+/* ─── Ambient background orbs ───────────────────────────── */
+
+@keyframes wishAmbientOrb {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(20px, -15px) scale(1.06); }
+}
+
+.wish-ambient-orb {
+  animation: wishAmbientOrb 8s ease-in-out infinite;
+}
+
+.wish-ambient-orb-reverse {
+  animation: wishAmbientOrb 10s ease-in-out infinite reverse;
+}
+
+
+/* ─── Card entrance ─────────────────────────────────────── */
+
+@keyframes wishCardEntrance {
+  from { opacity: 0; transform: scale(0.92) translateY(30px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.wish-card-entrance {
+  animation: wishCardEntrance 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+
+
+/* ─── Reduced motion ────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .wish-particle,
+  .wish-particle-confetti,
+  .wish-particle-heart,
+  .wish-particle-star,
+  .wish-particle-sparkle,
+  .wish-particle-petal,
+  .wish-particle-balloon,
+  .wish-opening-glow,
+  .wish-opening-item,
+  .wish-tap-btn,
+  .wish-reveal-item,
+  .wish-heart-beat,
+  .wish-reaction-burst,
+  .wish-ambient-orb,
+  .wish-ambient-orb-reverse,
+  .wish-card-entrance {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

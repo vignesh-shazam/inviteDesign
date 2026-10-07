@@ -27,10 +27,14 @@ import GoogleMapsLocationPicker from "@/components/invitation/GoogleMapsLocation
 import ThemeCustomizer from "@/components/invitation/ThemeCustomizer";
 import InvitationTemplate from "@/components/invitation/InvitationTemplate";
 import InvitationScene from "@/components/invitation/3d/InvitationScene";
-import AIVideoPreview from "@/components/invitation/video/AIVideoPreview";
 
 import HomeButton from "@/components/ui/HomeButton";
 import AIInvitationWriter from "@/components/ai/AIInvitationWriter";
+import AIVideoPreview from "@/components/invitation/video/AIVideoPreview";
+
+import {
+    mapAIDesignToVisualTheme,
+} from "@/lib/ai/aiDesignMapper";
 
 const eventTitlePlaceholders: Record<
     string,
@@ -477,6 +481,18 @@ function CreateInvitationPageContent() {
 
                             message:
                                 message.trim(),
+
+                            aiDesign:
+                                aiResult?.design
+                                    ? {
+                                          type: aiResult.design.type,
+                                          style: aiResult.design.style,
+                                          layout: aiResult.design.layout,
+                                          colorTheme: aiResult.design.colorTheme,
+                                          typography: aiResult.design.typography,
+                                          decoration: aiResult.design.decoration,
+                                      }
+                                    : null,
                         }),
                     },
                 );
@@ -540,6 +556,13 @@ function CreateInvitationPageContent() {
     const previewVenue =
         venue ||
         "Chennai, Tamil Nadu";
+
+    const aiVisualTheme =
+        aiResult?.design
+            ? mapAIDesignToVisualTheme(
+                  aiResult.design,
+              )
+            : null;
 
     return (
         <main className="min-h-screen bg-[#08090f] px-4 py-6 text-white sm:px-6 lg:px-8">
@@ -1355,40 +1378,150 @@ function CreateInvitationPageContent() {
 
                                 {selectedPreviewTab ===
                                     "2d" && (
-                                    <div>
+                                    <div className="mx-auto max-w-[420px]">
 
-                                        <div className="mx-auto max-w-[420px] rounded-2xl bg-black/20 p-3 ring-1 ring-white/[0.05]">
+                                        <div
+                                            className="relative overflow-hidden rounded-2xl p-3 transition-all duration-700"
+                                            style={{
+                                                backgroundColor:
+                                                    aiVisualTheme?.backgroundColor ??
+                                                    "#080a10",
+                                                boxShadow:
+                                                    aiVisualTheme
+                                                        ? `0 0 70px ${aiVisualTheme.primaryColor}20`
+                                                        : "0 0 50px rgba(139,92,246,0.08)",
+                                                border:
+                                                    `1px solid ${
+                                                        aiVisualTheme?.primaryColor ??
+                                                        "#8b5cf6"
+                                                    }20`,
+                                            }}
+                                        >
 
-                                            <InvitationTemplate
-                                                template={
-                                                    previewTemplate
-                                                }
-                                                category={
-                                                    eventType
-                                                }
-                                                title={
-                                                    title ||
-                                                    "You're Invited"
-                                                }
-                                                person1Name={
-                                                    person1Name
-                                                }
-                                                person2Name={
-                                                    person2Name
-                                                }
-                                                date={
-                                                    previewDate
-                                                }
-                                                venue={
-                                                    previewVenue
-                                                }
-                                            />
+                                            {aiVisualTheme && (
+                                                <>
+                                                    <div
+                                                        className="pointer-events-none absolute -left-12 -top-12 h-32 w-32 rounded-full blur-3xl"
+                                                        style={{
+                                                            backgroundColor:
+                                                                aiVisualTheme.primaryColor,
+                                                            opacity: 0.18,
+                                                        }}
+                                                    />
+
+                                                    <div
+                                                        className="pointer-events-none absolute -bottom-12 -right-12 h-36 w-36 rounded-full blur-3xl"
+                                                        style={{
+                                                            backgroundColor:
+                                                                aiVisualTheme.accentColor,
+                                                            opacity: 0.15,
+                                                        }}
+                                                    />
+
+                                                    <div
+                                                        className="pointer-events-none absolute inset-3 rounded-xl"
+                                                        style={{
+                                                            border:
+                                                                `1px solid ${aiVisualTheme.primaryColor}18`,
+                                                        }}
+                                                    />
+                                                </>
+                                            )}
+
+                                            <div className="relative">
+                                                <InvitationTemplate
+                                                    template={
+                                                        previewTemplate
+                                                    }
+                                                    category={
+                                                        eventType
+                                                    }
+                                                    title={
+                                                        title ||
+                                                        "You're Invited"
+                                                    }
+                                                    person1Name={
+                                                        person1Name
+                                                    }
+                                                    person2Name={
+                                                        person2Name
+                                                    }
+                                                    date={
+                                                        previewDate
+                                                    }
+                                                    venue={
+                                                        previewVenue
+                                                    }
+                                                />
+                                            </div>
 
                                         </div>
 
+                                        {aiVisualTheme &&
+                                            aiResult?.design && (
+                                                <div className="mt-4 flex flex-wrap justify-center gap-2">
+
+                                                    <span
+                                                        className="rounded-full border px-3 py-1.5 text-[9px] capitalize"
+                                                        style={{
+                                                            borderColor:
+                                                                `${aiVisualTheme.primaryColor}30`,
+                                                            backgroundColor:
+                                                                `${aiVisualTheme.primaryColor}10`,
+                                                            color:
+                                                                aiVisualTheme.primaryColor,
+                                                        }}
+                                                    >
+                                                        {aiResult.design.style}
+                                                    </span>
+
+                                                    <span
+                                                        className="rounded-full border px-3 py-1.5 text-[9px] capitalize"
+                                                        style={{
+                                                            borderColor:
+                                                                `${aiVisualTheme.accentColor}30`,
+                                                            backgroundColor:
+                                                                `${aiVisualTheme.accentColor}10`,
+                                                            color:
+                                                                aiVisualTheme.accentColor,
+                                                        }}
+                                                    >
+                                                        {aiResult.design.colorTheme}
+                                                    </span>
+
+                                                    <span
+                                                        className="rounded-full border px-3 py-1.5 text-[9px] capitalize"
+                                                        style={{
+                                                            borderColor:
+                                                                `${aiVisualTheme.secondaryColor}30`,
+                                                            backgroundColor:
+                                                                `${aiVisualTheme.secondaryColor}10`,
+                                                            color:
+                                                                aiVisualTheme.secondaryColor,
+                                                        }}
+                                                    >
+                                                        {aiResult.design.typography}
+                                                    </span>
+
+                                                    <span
+                                                        className="rounded-full border px-3 py-1.5 text-[9px] capitalize"
+                                                        style={{
+                                                            borderColor:
+                                                                `${aiVisualTheme.primaryColor}30`,
+                                                            backgroundColor:
+                                                                `${aiVisualTheme.primaryColor}10`,
+                                                            color:
+                                                                aiVisualTheme.primaryColor,
+                                                        }}
+                                                    >
+                                                        {aiResult.design.decoration}
+                                                    </span>
+
+                                                </div>
+                                            )}
+
                                     </div>
                                 )}
-
                                 {selectedPreviewTab ===
                                     "3d" && (
                                     <div className="overflow-hidden rounded-2xl border border-white/[0.06] bg-black/30">
@@ -1421,26 +1554,40 @@ function CreateInvitationPageContent() {
                                     </div>
                                 )}
 
-                                {selectedPreviewTab === "video" && (
+                                {selectedPreviewTab ===
+                                    "video" && (
                                     <AIVideoPreview
-                                        eventType={eventType}
-                                        eventName={title}
+                                        eventType={
+                                            eventType
+                                        }
+                                        eventName={
+                                            title ||
+                                            "You're Invited"
+                                        }
                                         hostNames={
-                                            eventType === "Wedding"
+                                            eventType ===
+                                            "Wedding"
                                                 ? `${person1Name} and ${person2Name}`
                                                 : undefined
                                         }
-                                        eventDate={date}
-                                        eventTime={time}
-                                        venue={venue}
-                                        design={aiResult?.design}
+                                        eventDate={
+                                            date
+                                        }
+                                        eventTime={
+                                            time
+                                        }
+                                        venue={
+                                            venue
+                                        }
+                                        design={
+                                            aiResult?.design
+                                        }
                                         content={
                                             aiResult?.variations?.[0] ??
                                             null
                                         }
                                     />
                                 )}
-
                                 {/* Empty state */}
                                 {!aiResult && (
                                     <div className="mt-4 rounded-xl border border-dashed border-white/[0.08] bg-white/[0.01] px-5 py-4 text-center">

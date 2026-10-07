@@ -1,5 +1,8 @@
 import { getSupabaseAdminClient } from "@/lib/db/supabaseAdmin";
-import type { Invitation } from "@/lib/db/database.types";
+import type {
+  Invitation,
+  InvitationAIDesignSnapshot,
+} from "@/lib/db/database.types";
 
 type CreateInvitationInput = {
   title: string;
@@ -15,6 +18,7 @@ type CreateInvitationInput = {
   message?: string;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
+  aiDesign?: InvitationAIDesignSnapshot | null;
 };
 
 type InvitationRow = {
@@ -34,69 +38,50 @@ type InvitationRow = {
   message: string | null;
   theme: Invitation["theme"];
   typography: Invitation["typography"];
+  ai_design: InvitationAIDesignSnapshot | null;
   status: Invitation["status"];
   created_at: string;
   updated_at: string;
 };
 
-function mapInvitationRow(
-  row: InvitationRow,
-): Invitation {
+function mapInvitationRow(row: InvitationRow): Invitation {
   return {
     id: row.id,
     cardId: row.card_id,
     slug: row.slug,
     title: row.title,
 
-    person1Name:
-      row.person1_name ?? "",
-
-    person2Name:
-      row.person2_name ?? "",
+    person1Name: row.person1_name ?? "",
+    person2Name: row.person2_name ?? "",
 
     templateId: row.template_id,
     category: row.category,
 
-    eventDate:
-      row.event_date ?? "",
+    eventDate: row.event_date ?? "",
+    eventTime: row.event_time ?? "",
 
-    eventTime:
-      row.event_time ?? "",
+    venue: row.venue ?? "",
+    venueAddress: row.venue_address ?? "",
+    mapsUrl: row.maps_url ?? "",
 
-    venue:
-      row.venue ?? "",
+    message: row.message ?? "",
 
-    venueAddress:
-      row.venue_address ?? "",
+    theme: row.theme,
+    typography: row.typography,
 
-    mapsUrl:
-      row.maps_url ?? "",
+    aiDesign: row.ai_design ?? null,
 
-    message:
-      row.message ?? "",
+    status: row.status,
 
-    theme:
-      row.theme,
-
-    typography:
-      row.typography,
-
-    status:
-      row.status,
-
-    createdAt:
-      row.created_at,
-
-    updatedAt:
-      row.updated_at,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
   };
 }
 
 export async function createInvitation(
   input: CreateInvitationInput,
 ): Promise<Invitation> {
-  const supabase =
-    getSupabaseAdminClient();
+  const supabase = getSupabaseAdminClient();
 
   const slug =
     input.title
@@ -104,65 +89,39 @@ export async function createInvitation(
       .trim()
       .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-")
-      .replace(/-+/g, "-") ||
-    "invitation";
+      .replace(/-+/g, "-") || "invitation";
 
-  const { data, error } =
-    await supabase
-      .from("invitations")
-      .insert({
-        slug,
+  const { data, error } = await supabase
+    .from("invitations")
+    .insert({
+      slug,
 
-        title:
-          input.title.trim(),
+      title: input.title.trim(),
 
-        person1_name:
-          input.person1Name?.trim() ||
-          null,
+      person1_name: input.person1Name?.trim() || null,
+      person2_name: input.person2Name?.trim() || null,
 
-        person2_name:
-          input.person2Name?.trim() ||
-          null,
+      template_id: input.templateId,
+      category: input.category,
 
-        template_id:
-          input.templateId,
+      event_date: input.eventDate || null,
+      event_time: input.eventTime || null,
 
-        category:
-          input.category,
+      venue: input.venue?.trim() || null,
+      venue_address: input.venueAddress?.trim() || null,
+      maps_url: input.mapsUrl?.trim() || null,
 
-        event_date:
-          input.eventDate || null,
+      message: input.message?.trim() || null,
 
-        event_time:
-          input.eventTime || null,
+      theme: input.theme,
+      typography: input.typography,
 
-        venue:
-          input.venue?.trim() ||
-          null,
+      ai_design: input.aiDesign ?? null,
 
-        venue_address:
-          input.venueAddress?.trim() ||
-          null,
-
-        maps_url:
-          input.mapsUrl?.trim() ||
-          null,
-
-        message:
-          input.message?.trim() ||
-          null,
-
-        theme:
-          input.theme,
-
-        typography:
-          input.typography,
-
-        status:
-          "draft",
-      })
-      .select("*")
-      .single();
+      status: "draft",
+    })
+    .select("*")
+    .single();
 
   if (error) {
     throw new Error(
@@ -170,23 +129,19 @@ export async function createInvitation(
     );
   }
 
-  return mapInvitationRow(
-    data as InvitationRow,
-  );
+  return mapInvitationRow(data as InvitationRow);
 }
 
 export async function getInvitationByCardId(
   cardId: string,
 ): Promise<Invitation | null> {
-  const supabase =
-    getSupabaseAdminClient();
+  const supabase = getSupabaseAdminClient();
 
-  const { data, error } =
-    await supabase
-      .from("invitations")
-      .select("*")
-      .eq("card_id", cardId)
-      .maybeSingle();
+  const { data, error } = await supabase
+    .from("invitations")
+    .select("*")
+    .eq("card_id", cardId)
+    .maybeSingle();
 
   if (error) {
     throw new Error(
@@ -198,7 +153,29 @@ export async function getInvitationByCardId(
     return null;
   }
 
-  return mapInvitationRow(
-    data as InvitationRow,
-  );
+  return mapInvitationRow(data as InvitationRow);
+}
+
+export async function getInvitations(options?: {
+  limit?: number;
+  offset?: number;
+}): Promise<Invitation[]> {
+  const supabase = getSupabaseAdminClient();
+
+  const limit = options?.limit ?? 50;
+  const offset = options?.offset ?? 0;
+
+  const { data, error } = await supabase
+    .from("invitations")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .range(offset, offset + limit - 1);
+
+  if (error) {
+    throw new Error(
+      `Failed to fetch invitations: ${error.message}`,
+    );
+  }
+
+  return (data as InvitationRow[]).map(mapInvitationRow);
 }

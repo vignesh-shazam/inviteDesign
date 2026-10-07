@@ -68,7 +68,9 @@ export default function AuthenticatedLayout({
      */
     const isPublicInvitation =
         pathname === "/i" ||
-        pathname.startsWith("/i/");
+        pathname.startsWith("/i/") ||
+        pathname === "/w" ||
+        pathname.startsWith("/w/");
 
     /*
      * Public 3D test page
